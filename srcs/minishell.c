@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/06 00:56:41 by me               ###   ########.fr       */
+/*   Updated: 2022/01/14 17:50:08 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,24 @@ int	run_mini(char **env, char **line)
 }
 
 	// this ft is just about reading new lines
-int	minishell(char **env, int i)
+	// prolly not env, i would rather store env in the giant main struct
+		// whatever that is called
+int	minishell(t_sh *all, int i)
 {
 	char	*line;
 	int		ret;
 
-	(void)env;
+	(void)all;
 	ft_prompt();
 	ret = ft_gnl(&line, 0);
 	printf("%s\n", line);
 
-	// would it be better to do the line processing here?
-		// as in the Lexer and parse?
-		// no do it in launch
-	// this is the part where i can do stuff with line, like run the lexer...
+	// some sort of lexer parser that will turn the line into something useful
+		// it will store all that shit in all?
+		// in a linked list in all?
 
-	// if nothing we return?
-
-	// if something we send to run_mini()
+	// some sort of run or exec func that will execute everything
+		// either it runs a builtin or does exec
 
 	free(line);
 
@@ -57,7 +57,8 @@ int	minishell(char **env, int i)
 
 int	main(int ac, char **av, char **env)
 {
-	int	status;
+	int		status;
+	t_sh	all;
 	char	**envir;
 	// so i call the lexer -> parser -> expander -> exectuor
 	// nto sure what many of those are...
@@ -76,7 +77,7 @@ int	main(int ac, char **av, char **env)
 	int i = 0;	// i is just for testing...
 	while (status != -1)
 	{
-		status = minishell(env, i);		// sending env for now, will prolly change
+		status = minishell(&all, i);		// sending env for now, will prolly change
 		++i;
 	}
 

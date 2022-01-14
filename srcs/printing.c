@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:37:12 by me                #+#    #+#             */
-/*   Updated: 2022/01/06 00:56:52 by me               ###   ########.fr       */
+/*   Updated: 2022/01/13 23:04:46 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	ft_prompt(void)
 {
-	ft_putstr_fd("➜ minishell > ", 2);
+//	write(1, "➜ minishell > ", 14);
+	ft_putstr_fd("➜ minishell > ", 1);	// fd 1 works just fine, not sure
+										// why it didn't before
+	//ft_putstr_fd("➜ minishell > ", 2);	// fd 2 works but it's STDERR
+//	ft_putstr_fd("➜ minishell > ", 3);	// fd 3 absolutely does not work
 }
 
 

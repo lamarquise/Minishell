@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/06 00:57:00 by me               ###   ########.fr       */
+/*   Updated: 2022/01/14 17:45:52 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ typedef struct	s_tolk
 
 }				t_tolk;
 
+typedef struct	s_sh	// this is our main struct, we will call it all
+{
+	// no idea what to put in it...
+	// a linked list of env vars?
+
+	t_list		*env;
+
+
+}				t_sh
 
 /*
 **	Printing
