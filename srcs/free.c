@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/14 18:06:55 by me               ###   ########.fr       */
+/*   Created: 2022/01/14 18:11:09 by me                #+#    #+#             */
+/*   Updated: 2022/01/14 18:12:05 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// free everything
 
-// some sort of lexer?
-
-
-// int?
-int	lexer(t_sh *all)
-{
-	// what is meant to be done here? idk cuz i don't know the diff between a
-	// parser and a lexer...
-
-
-	return (0); // means all good
-	// return (2); if parsing error!
-	// return (-1); if need to exit out of minishell program
-}
+// a free for all in case shit goes wrong
+// a free for just the stuff in t_sh *all for after an input line has been executed
+// prolly other shit.

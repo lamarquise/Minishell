@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/14 17:50:08 by me               ###   ########.fr       */
+/*   Updated: 2022/01/14 18:24:24 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 	// here we do processing, like Lexer and Parser, then hand off to right func
 		// either builtin or exec
-int	run_mini(char **env, char **line)
+int	run_mini(t_sh *all, char **line)
 {
 
 	(void)env;
@@ -41,11 +41,21 @@ int	minishell(t_sh *all, int i)
 	// some sort of lexer parser that will turn the line into something useful
 		// it will store all that shit in all?
 		// in a linked list in all?
+	ret = lexer(all);
+	if (ret != 0)
+	{
+		// a custome free that checks if free possible?
+		// free more stuff?
+		free(line);
+		return (ret);
+	}
 
 	// some sort of run or exec func that will execute everything
 		// either it runs a builtin or does exec
 
 	free(line);
+
+	// ideally free everything in t_sh *all that only exists for this line of commands
 
 	if (i == 3)		// i is just for testing
 		return (-1);
@@ -75,6 +85,8 @@ int	main(int ac, char **av, char **env)
 	// run the minishell loop 
 	status = 0;	// why 0 i'm not sure...
 	int i = 0;	// i is just for testing...
+	// we keep status != -1 cuz if a positive error, the loop continues
+	// but we print an error message being like yo, the input you put don't work...
 	while (status != -1)
 	{
 		status = minishell(&all, i);		// sending env for now, will prolly change
