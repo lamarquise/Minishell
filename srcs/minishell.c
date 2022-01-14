@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/14 18:24:24 by me               ###   ########.fr       */
+/*   Updated: 2022/01/14 21:40:29 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	run_mini(t_sh *all, char **line)
 {
 
-	(void)env;
+	(void)all;
 	(void)line;
 
 	// first check builtins
@@ -41,7 +41,7 @@ int	minishell(t_sh *all, int i)
 	// some sort of lexer parser that will turn the line into something useful
 		// it will store all that shit in all?
 		// in a linked list in all?
-	ret = lexer(all);
+	ret = lexer(all, line);
 	if (ret != 0)
 	{
 		// a custome free that checks if free possible?

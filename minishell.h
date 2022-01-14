@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/14 18:24:58 by me               ###   ########.fr       */
+/*   Updated: 2022/01/14 21:41:03 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,21 @@
 
 // some defines
 
+// i'm guessing i'll need something like this...
+	// swap names with below?
+	// no idea what the values should be yet but whatever
+	// is it ok for me to do the typedef here?
+typedef enum	e_token
+{
+	WORD,
+	OPERATOR,
+	SOMETHING
+}				t_e_token;	// i know the _e_ isn't necessary but i don't care
+
+
+
 // celia called this cmd, not sure which i like more
-typedef struct	s_tolk
+typedef struct	s_tok
 {
 	// char or int?
 //	char	*val;
@@ -35,7 +48,7 @@ typedef struct	s_tolk
 	// should it be a linked list?
 	struct s_tolk	*next;
 
-}				t_tolk;
+}				t_tok;
 
 typedef struct	s_sh	// this is our main struct, we will call it all
 {
@@ -48,7 +61,7 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 	// i'm assuming somewhere in here will be the historique?
 	// but i also think a lot of stuff will just be pointers so
 	// after each new line i can free it all and get back to a clean minishell struct
-}				t_sh
+}				t_sh;
 
 /*
 **	Main
@@ -68,7 +81,7 @@ void		ft_simple_print();
 **	Lexer
 */
 
-int			lexer(t_sh *all);
+int			lexer(t_sh *all, char *line);
 
 /*
 **	Parser
