@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/14 21:41:03 by me               ###   ########.fr       */
+/*   Updated: 2022/01/15 04:10:22 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,21 @@ typedef enum	e_token
 	SOMETHING
 }				t_e_token;	// i know the _e_ isn't necessary but i don't care
 
+/*
+	A-Z words?
+	' Quote
+	" Double Quote
+	| Pipe
+	' ' whitespace
+		\t \n also whitespaces?
+	> Greater
+	< Lesser
+	$ Dollar? call something else?
+	\ Backslash 	// wait, maybe i'm not supposed to handle this...
+	- Dash
+	0 NULL ? call something else? dif symbol?
 
+*/
 
 // celia called this cmd, not sure which i like more
 typedef struct	s_tok
