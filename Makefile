@@ -9,8 +9,10 @@ NAME		=	minishell
 DIR_SHELL	=	./srcs/
 
 SRCS_SHELL	=	minishell.c \
+				init.c \
 				lexer.c \
 				parser.c \
+				token_list.c \
 				builtins_hub.c \
 				builtin_cd.c \
 				builtin_pwd.c \

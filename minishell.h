@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/17 03:39:52 by me               ###   ########.fr       */
+/*   Updated: 2022/01/17 23:57:57 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,27 @@
 	// swap names with below?
 	// no idea what the values should be yet but whatever
 	// is it ok for me to do the typedef here?
-typedef enum	e_token
+typedef enum	e_type
 {			// NO see vportens' struct.h for some good structs
 	WORD,
-	OPERATOR,
-	SOMETHING
-}				t_e_token;	// i know the _e_ isn't necessary but i don't care
+	PIPE,
+	RIN,	// as in Redirection In
+	ROUT,
+	HDOC,
+	AROUT
+}				t_e_type;	// i know the _e_ isn't necessary but i don't care
 
 /*
+
+	word
+	pipe
+	<
+	>
+	>>
+	<<
+	
+
+
 	A-Z words?
 		_ is also a valid char for words!
 	' Quote
@@ -50,29 +63,45 @@ typedef enum	e_token
 
 */
 
-// celia called this cmd, not sure which i like more
 typedef struct	s_tok
 {
-	// char or int?
-//	char	*val;
-	int		val;
-	// something type;
-	int		status;
-	int		pipe;	// not sure which if these i will end up using...
 
-	// pid_t	pid; 	// a pid?
+	t_e_type	type;
+
 
 	// should it be a linked list?
 	struct s_tolk	*next;
 
 }				t_tok;
 
+typedef struct	s_cmd_line
+{
+	int		num;		// or we use an ilist and a pointer to this struct?
+	t_tok	*tokens;
+	char	*line;
+}				t_cmd_line;
+
+
 typedef struct	s_sh	// this is our main struct, we will call it all
 {
 	// no idea what to put in it...
 	// a linked list of env vars?
+		// we could do something more complicated with key,value pairs in a linkedlist
 
-	t_list		*env;
+	t_list	*env;
+
+//	t_tok	*tokens;
+	t_cmd_line	*lines;	// would also serve for the history?
+	// maybe it would be better to use t_lists?
+
+	// would it be intersting to copy paste the entire struct, line and tokens
+		// when someone uses the historique to grab an old command?
+		// or would that not work cuz they can modify the line?
+		// this would only work if you can't edit lines from the historique...
+		// which only works if BOTH you can't arrow key through a line
+		// and in the specific case of the historique you can't backspace.
+
+	// something about commands and how they pipe together?
 
 
 	// i'm assuming somewhere in here will be the historique?
