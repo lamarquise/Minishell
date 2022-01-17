@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/15 04:10:22 by me               ###   ########.fr       */
+/*   Updated: 2022/01/17 03:39:52 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 	// no idea what the values should be yet but whatever
 	// is it ok for me to do the typedef here?
 typedef enum	e_token
-{
+{			// NO see vportens' struct.h for some good structs
 	WORD,
 	OPERATOR,
 	SOMETHING
@@ -33,6 +33,7 @@ typedef enum	e_token
 
 /*
 	A-Z words?
+		_ is also a valid char for words!
 	' Quote
 	" Double Quote
 	| Pipe
@@ -43,6 +44,8 @@ typedef enum	e_token
 	$ Dollar? call something else?
 	\ Backslash 	// wait, maybe i'm not supposed to handle this...
 	- Dash
+		is it techinally part of a word? like ls -la, -la is an arg, i assume i would
+		send the whole thing?
 	0 NULL ? call something else? dif symbol?
 
 */
