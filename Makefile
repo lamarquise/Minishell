@@ -16,6 +16,7 @@ SRCS_SHELL	=	minishell.c \
 				builtins_hub.c \
 				builtin_cd.c \
 				builtin_pwd.c \
+				builtin_env.c \
 				free.c \
 				printing.c \
 
@@ -29,6 +30,7 @@ SRCS_MINILIB	=	atoi_funcs.c \
 					ft_strjoin.c \
 					is_funcs.c \
 					list_funcs.c \
+					list_funcs_more.c \
 					nlist_funcs.c \
 					nlstdel_n_one.c \
 					ilist_funcs.c \

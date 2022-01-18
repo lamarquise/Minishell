@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:37:57 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/08/10 20:16:11 by ericlazo         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:17:37 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_list	*ft_lstnew(void *content)
 	return (elem);
 }
 
-void	ft_print_elem(t_list *elem)
+void	ft_print_list_elem(t_list *elem)
 {
 	ft_putstr((char *)elem->content);
 	ft_putchar('\n');

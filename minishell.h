@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/17 23:57:57 by me               ###   ########.fr       */
+/*   Updated: 2022/01/18 21:16:36 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef enum	e_type
 	ROUT,
 	HDOC,
 	AROUT
+	// we need more, need to differenciate between < and < with words after.
 }				t_e_type;	// i know the _e_ isn't necessary but i don't care
 
 /*
@@ -67,10 +68,10 @@ typedef struct	s_tok
 {
 
 	t_e_type	type;
-
+	char		*str;
 
 	// should it be a linked list?
-	struct s_tolk	*next;
+	struct s_tok	*next;
 
 }				t_tok;
 
@@ -78,21 +79,34 @@ typedef struct	s_cmd_line
 {
 	int		num;		// or we use an ilist and a pointer to this struct?
 	t_tok	*tokens;
-	char	*line;
+	char	*line;	// as in the full line read with gnl
+	// we could have a linked list of the broken up lines?
+	// we could also have a string that's the final product we are to send to execve?
+	
+	int		dquotes;
+	int		squotes;
+	int		pipe;	//  do we want this?
+	
+	struct s_cmd_line	*next;
 }				t_cmd_line;
 
 
 typedef struct	s_sh	// this is our main struct, we will call it all
 {
-	// no idea what to put in it...
 	// a linked list of env vars?
 		// we could do something more complicated with key,value pairs in a linkedlist
+	// might be worth keeping a copy of all the og stuff in here?
+	int		ac;
+	char	**av;
+	char	**envir;	// this is what the main passes us, just in case we need it again?
+	// would it be helpful to keep
+	//int	status; // in here too?
 
+	
+	int		nhist;	// the number of commands entered so far, just a counter
 	t_list	*env;
 
-//	t_tok	*tokens;
 	t_cmd_line	*lines;	// would also serve for the history?
-	// maybe it would be better to use t_lists?
 
 	// would it be intersting to copy paste the entire struct, line and tokens
 		// when someone uses the historique to grab an old command?
@@ -115,6 +129,13 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 
 
 int			minishell(t_sh *all, int i);
+
+/*
+**	Init
+*/
+
+int			ft_get_all_env(t_sh *all);
+int			init_sh(t_sh *all);
 
 /*
 **	Printing
@@ -144,6 +165,12 @@ int			lexer(t_sh *all, char *line);
 /*
 **	Builtin PWD
 */
+
+/*
+**	Builtin ENV
+*/
+
+int			builtin_env(t_sh *all);
 
 /*
 **	Builtin

@@ -6,15 +6,14 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/17 23:58:02 by me               ###   ########.fr       */
+/*   Updated: 2022/01/18 20:25:02 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-// some sort of lexer?
-
+// the work of the Lexer is to identify tokens
 
 // how will it work?
 /*

@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:33:21 by ericlazo          #+#    #+#             */
-/*   Updated: 2022/01/06 00:56:56 by me               ###   ########.fr       */
+/*   Updated: 2022/01/18 21:17:52 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,14 @@ void		ft_lstadd_back(t_list **alst, t_list *new);
 void		ft_lstadd_front(t_list **alst, t_list *new);
 void		ft_lstclear(t_list **lst, void (*del)(void*));
 t_list		*ft_lstnew(void *content);
-void		ft_print_elem(t_list *elem);
+void		ft_print_list_elem(t_list *elem);
+
+/*
+**		List Funcs More
+*/
+
+int			ft_print_full_list(t_list *lst);
+void		ft_lstdel_str_elem(void *data);
 
 /*
 **		nList Funcs

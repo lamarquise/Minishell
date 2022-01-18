@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/17 23:58:05 by me               ###   ########.fr       */
+/*   Updated: 2022/01/18 21:13:50 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,19 @@ int	main(int ac, char **av, char **env)
 {
 	int		status;
 	t_sh	all;
-	char	**envir;
 	// so i call the lexer -> parser -> expander -> exectuor
 	// nto sure what many of those are...
 
 	if (ac != 1)
-		return (0);
-	(void)av;
-	(void)env;
-	(void)envir;
+		return (1); // 1 right? or -1?
+	all.ac = ac;
+	all.av = av;
+	all.envir = env;
+
+	// should prolly secure later
+	init_sh(&all);
+//	ft_print_full_list(all.env);
+	builtin_env(&all);
 	// sort out sigaction redirects
 
 	// init some stuff based on env
