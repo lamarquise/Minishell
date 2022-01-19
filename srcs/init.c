@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:16:02 by me                #+#    #+#             */
-/*   Updated: 2022/01/18 21:16:05 by me               ###   ########.fr       */
+/*   Updated: 2022/01/19 05:07:39 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	ft_get_all_env(t_sh *all)
 	while ((all->envir)[i])
 	{
 		tmp = ft_lstnew((all->envir)[i]);
+		if (!tmp)
+		{
+			// anything to free?
+			return (3);
+		}
 		ft_lstadd_front(&all->env, tmp);
 		++i;
 	}
@@ -45,7 +50,7 @@ int	init_sh(t_sh *all)
 	if (!all)	// is this shit really necessary?
 		return (1);
 
-	all->nhist = 0;
+	all->n_hist = 0;
 //	all->env = ft_get_all_env(void);
 	if (ft_get_all_env(all) > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/18 21:16:36 by me               ###   ########.fr       */
+/*   Updated: 2022/01/19 05:47:08 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,15 @@ typedef struct	s_tok
 
 typedef struct	s_cmd_line
 {
+	// this value starts at 1...
 	int		num;		// or we use an ilist and a pointer to this struct?
 	t_tok	*tokens;
 	char	*line;	// as in the full line read with gnl
 	// we could have a linked list of the broken up lines?
 	// we could also have a string that's the final product we are to send to execve?
 	
-	int		dquotes;
-	int		squotes;
+	int		dqs;	// double quotes
+	int		sqs;
 	int		pipe;	//  do we want this?
 	
 	struct s_cmd_line	*next;
@@ -103,7 +104,7 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 	//int	status; // in here too?
 
 	
-	int		nhist;	// the number of commands entered so far, just a counter
+	int		n_hist;	// the number of commands entered so far, just a counter
 	t_list	*env;
 
 	t_cmd_line	*lines;	// would also serve for the history?
@@ -148,11 +149,27 @@ void		ft_simple_print();
 **	Lexer
 */
 
-int			lexer(t_sh *all, char *line);
+int			lexer(t_sh *all);
 
 /*
 **	Parser
 */
+
+/*
+**	Token List
+*/
+
+t_tok		*ft_toknew(t_e_type type, char *str);
+int			ft_tokadd_front(t_tok **lst, t_tok *new);
+int			ft_tokdel_all(t_tok **lst);
+
+/*
+**	Command List
+*/
+
+t_cmd_line	*ft_cmdline_new(char *line, int num);
+int			ft_cmdline_add_front(t_cmd_line **lst, t_cmd_line *new);
+int			ft_cmdline_del_all(t_cmd_line **lst);
 
 /*
 **	Builtins Hub
@@ -180,5 +197,6 @@ int			builtin_env(t_sh *all);
 **	Free
 */
 
+int			free_sh(t_sh *all);
 
 #endif

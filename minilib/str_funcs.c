@@ -6,7 +6,7 @@
 /*   By: ericlazo <erlazo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 19:44:54 by ericlazo          #+#    #+#             */
-/*   Updated: 2021/12/10 09:01:52 by me               ###   ########.fr       */
+/*   Updated: 2022/01/19 05:47:11 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_findchar(char *str, char c)
 {
 	int		i;
 
+	if (!str)
+		return (-1);
 	i = 0;
 	while (str[i])
 	{

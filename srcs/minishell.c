@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/18 21:13:50 by me               ###   ########.fr       */
+/*   Updated: 2022/01/19 05:47:04 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,28 @@ int	run_mini(t_sh *all, char **line)
 	return (1);
 }
 
+// almost certainly put somewhere else...
+int	create_cmd_line_elem(t_sh *all, char *line)
+{
+	t_cmd_line	*tmp;
+
+	if (!all)
+		return (1);
+	// something about create a new cmd elem and add it to the list of cmds in sh
+	tmp = ft_cmdline_new(line, ++all->n_hist);
+	if (!tmp)
+		return (1);
+	if (ft_cmdline_add_front(&all->lines, tmp) != 0)
+	{
+		// prolly free something too?
+		// a bit over kill but for now 🤷
+		ft_cmdline_del_all(&tmp);
+		return (1);
+	}
+	return (0);
+}
+
+
 	// this ft is just about reading new lines
 	// prolly not env, i would rather store env in the giant main struct
 		// whatever that is called
@@ -36,25 +58,33 @@ int	minishell(t_sh *all, int i)
 	(void)all;
 	ft_prompt();
 	ret = ft_gnl(&line, 0);
-	printf("%s\n", line);
+	printf("Printing line |%s|\n", line);
+
+	ret = create_cmd_line_elem(all, line);
+	if (ret != 0)
+		return (ft_scott_free(&line, ret));
+	printf("in minishell func after create new cmd_line\n");
 
 	// some sort of lexer parser that will turn the line into something useful
 		// it will store all that shit in all?
 		// in a linked list in all?
-	ret = lexer(all, line);
+	ret = lexer(all);
 	if (ret != 0)
 	{
 		
 		// a custome free that checks if free possible?
 		// free more stuff?
-		free(line);
+
+		// we don't want to free line cuz we keeping it in cmd_line struct.
+//		free(line);
 		return (ret);
 	}
+	printf("in minishell func after lexer\n");
 
 	// some sort of run or exec func that will execute everything
 		// either it runs a builtin or does exec
 
-	free(line);
+//	free(line);
 
 	// ideally free everything in t_sh *all that only exists for this line of commands
 
@@ -82,7 +112,8 @@ int	main(int ac, char **av, char **env)
 	// should prolly secure later
 	init_sh(&all);
 //	ft_print_full_list(all.env);
-	builtin_env(&all);
+	// just for testing
+//	builtin_env(&all);
 	// sort out sigaction redirects
 
 	// init some stuff based on env
@@ -94,10 +125,11 @@ int	main(int ac, char **av, char **env)
 	// but we print an error message being like yo, the input you put don't work...
 	while (status != -1)
 	{
+		// don't forget to remove i
 		status = minishell(&all, i);		// sending env for now, will prolly change
 		++i;
 	}
-
+	free_sh(&all);
 //	ft_prompt();
 //	ft_simple_print();
 

@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:41:51 by me                #+#    #+#             */
-/*   Updated: 2022/01/18 20:59:11 by me               ###   ########.fr       */
+/*   Updated: 2022/01/19 05:47:13 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,11 @@ int	ft_print_full_list(t_list *lst)
 		lst = lst->next;
 	}
 	return (1);
+}
+
+void	ft_lstdel_str_elem(void *data)
+{
+	if (!data)
+		return ;
+	free((char*)data);
 }

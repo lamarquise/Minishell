@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:37:12 by me                #+#    #+#             */
-/*   Updated: 2022/01/13 23:04:46 by me               ###   ########.fr       */
+/*   Updated: 2022/01/19 05:47:06 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_prompt(void)
 }
 
 
+	// no in final program i think
 void	ft_simple_print()
 {
 	char	*line;

@@ -13,6 +13,7 @@ SRCS_SHELL	=	minishell.c \
 				lexer.c \
 				parser.c \
 				token_list.c \
+				cmd_list.c \
 				builtins_hub.c \
 				builtin_cd.c \
 				builtin_pwd.c \

@@ -1,43 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_list.c                                       :+:      :+:    :+:   */
+/*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 20:23:29 by me                #+#    #+#             */
-/*   Updated: 2022/01/18 21:19:55 by me               ###   ########.fr       */
+/*   Created: 2022/01/18 21:27:25 by me                #+#    #+#             */
+/*   Updated: 2022/01/19 05:14:15 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// everything to do with token lists
-
-
-// will need a
-	// new
-	// add front
-	// add back?
-	// del first
-	// del all?
-
-
-t_tok	*ft_toknew(t_e_type type, char *str)
+    // to some degree this inits too
+t_cmd_line	*ft_cmdline_new(char *line, int num)
 {
-	t_tok	*elem;
+	t_cmd_line	*elem;
 
-	elem = (t_tok *)malloc(sizeof(t_tok));
+	elem = (t_cmd_line *)malloc(sizeof(t_cmd_line));
 	if (!elem)
 		return (NULL);
-	elem->type = type;
-	elem->str = str;
+	elem->num = num;
+	elem->line = line;
+    elem->tokens = NULL;
+    elem->dqs = 0;
+    elem->sqs = 0;
 	elem->next = NULL;
 	return (elem);
 }
 
-// fine for now
-int	ft_tokadd_front(t_tok **lst, t_tok *new)
+int	ft_cmdline_add_front(t_cmd_line **lst, t_cmd_line *new)
 {
 	if (!lst || !new)
 		return (1);
@@ -46,9 +38,10 @@ int	ft_tokadd_front(t_tok **lst, t_tok *new)
 	return (0);
 }
 
-int	ft_tokdel_all(t_tok **lst)
+    // this is gonna be much trickier
+int	ft_cmdline_del_all(t_cmd_line **lst)
 {
-	t_tok	*tmp;
+	t_cmd_line	*tmp;
 
 	if (!lst)
 		return (1);
@@ -56,7 +49,8 @@ int	ft_tokdel_all(t_tok **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		ft_scott_free(&((*lst)->str), 0);
+		ft_scott_free(&(*lst)->line, 0);
+        ft_tokdel_all(&(*lst)->tokens); // secure?
 		free(*lst);
 		*lst = tmp;
 	}
