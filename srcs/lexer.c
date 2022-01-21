@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 07:45:57 by me               ###   ########.fr       */
+/*   Updated: 2022/01/21 20:32:46 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	lexer(t_cmd_line *cmd)
 //	printf("in lexer, line: |%s|, next_pipe val: %d\n", cmd->line, next_pipe);
 	while (cmd->line[pos])
 	{
+		// could i just do find_chars( | ' " )?
 		next_pipe = ft_findchar(&cmd->line[pos], '|');
 		next_quote = ft_find_chars(&cmd->line[pos], "\'\"");
 /*		if (next_pipe > next_quote)

@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 07:47:23 by me               ###   ########.fr       */
+/*   Updated: 2022/01/21 20:32:49 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@
 	// is it ok for me to do the typedef here?
 typedef enum	e_type
 {			// NO see vportens' struct.h for some good structs
-	WORD,
-	PIPE,	// might not be necessary?
-	RIN,	// as in Redirection In
-	ROUT,
-	HDOC,
-	AROUT
+	WORD,	// a-Z and _
+	PIPE,	// | // might not be necessary?
+	RIN,	// < // as in Redirection In
+	ROUT,	// >
+	HDOC,	// <<
+	AROUT	// >>
 	// we need more, need to differenciate between < and < with words after.
 }				t_e_type;	// i know the _e_ isn't necessary but i don't care
 
@@ -76,22 +76,32 @@ typedef struct	s_tok
 
 }				t_tok;
 
-typedef struct	s_cmd_line
+typedef struct	s_cmd
+{
+	t_tok				*tokens;
+	char				*words;	// might change later
+
+	int					dqs;	// double quotes
+	int					sqs;
+	int					pipe;	//  do we want this?	// is it the position?
+	struct s_full_line	*home;
+
+	struct s_cmd		*next;
+}				t_cmd;
+
+typedef struct	s_full_line
 {
 	// this value starts at 1...
 	int					num;		// or we use an ilist and a pointer to this struct?
-	t_tok				*tokens;
 	char				*line;	// as in the full line read with gnl
 	// we could have a linked list of the broken up lines?
 	// we could also have a string that's the final product we are to send to execve?
 	
-	int					dqs;	// double quotes
-	int					sqs;
-	int					pipe;	//  do we want this?	// is it the position?
-	struct s_sh			*home;
+	struct s_cmd		*cmds;
+	struct s_sh			*all;
 	
-	struct s_cmd_line	*next;
-}				t_cmd_line;
+	struct s_full_line	*next;
+}				t_full_line;
 
 
 typedef struct	s_sh	// this is our main struct, we will call it all
@@ -152,6 +162,12 @@ void		ft_simple_print();
 */
 
 int			lexer(t_cmd_line *cmd);
+
+/*
+**	Lexer
+*/
+
+
 
 /*
 **	Parser

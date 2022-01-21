@@ -21,6 +21,8 @@ SRCS_SHELL	=	minishell.c \
 				free.c \
 				printing.c \
 				split_until.c \
+				make_token.c \
+
 
 
 # may move these to be in the SRCS folder, if the cors are gonna get all annoying about it...
