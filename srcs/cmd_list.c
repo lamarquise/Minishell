@@ -6,14 +6,14 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:27:25 by me                #+#    #+#             */
-/*   Updated: 2022/01/19 05:14:15 by me               ###   ########.fr       */
+/*   Updated: 2022/01/20 07:08:11 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
     // to some degree this inits too
-t_cmd_line	*ft_cmdline_new(char *line, int num)
+t_cmd_line	*ft_cmdline_new(t_sh *all, char *line, int num)
 {
 	t_cmd_line	*elem;
 
@@ -25,6 +25,7 @@ t_cmd_line	*ft_cmdline_new(char *line, int num)
     elem->tokens = NULL;
     elem->dqs = 0;
     elem->sqs = 0;
+	elem->home = all;
 	elem->next = NULL;
 	return (elem);
 }

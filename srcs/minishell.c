@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/19 05:47:04 by me               ###   ########.fr       */
+/*   Updated: 2022/01/21 07:46:05 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	create_cmd_line_elem(t_sh *all, char *line)
 	if (!all)
 		return (1);
 	// something about create a new cmd elem and add it to the list of cmds in sh
-	tmp = ft_cmdline_new(line, ++all->n_hist);
+	tmp = ft_cmdline_new(all, line, ++all->n_hist);
 	if (!tmp)
 		return (1);
 	if (ft_cmdline_add_front(&all->lines, tmp) != 0)
@@ -63,12 +63,12 @@ int	minishell(t_sh *all, int i)
 	ret = create_cmd_line_elem(all, line);
 	if (ret != 0)
 		return (ft_scott_free(&line, ret));
-	printf("in minishell func after create new cmd_line\n");
+//	printf("in minishell func after create new cmd_line\n");
 
 	// some sort of lexer parser that will turn the line into something useful
 		// it will store all that shit in all?
 		// in a linked list in all?
-	ret = lexer(all);
+	ret = lexer(all->lines);
 	if (ret != 0)
 	{
 		
@@ -79,7 +79,7 @@ int	minishell(t_sh *all, int i)
 //		free(line);
 		return (ret);
 	}
-	printf("in minishell func after lexer\n");
+//	printf("in minishell func after lexer\n");
 
 	// some sort of run or exec func that will execute everything
 		// either it runs a builtin or does exec
@@ -129,7 +129,9 @@ int	main(int ac, char **av, char **env)
 		status = minishell(&all, i);		// sending env for now, will prolly change
 		++i;
 	}
+//	printf("main, before final free\n");
 	free_sh(&all);
+//	printf("main, after final free\n");
 //	ft_prompt();
 //	ft_simple_print();
 

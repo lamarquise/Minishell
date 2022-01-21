@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/19 05:47:08 by me               ###   ########.fr       */
+/*   Updated: 2022/01/21 07:47:23 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,6 @@
 #include "minilib.h"
 
 // some defines
-
-// i'm guessing i'll need something like this...
-	// swap names with below?
-	// no idea what the values should be yet but whatever
-	// is it ok for me to do the typedef here?
-typedef enum	e_type
-{			// NO see vportens' struct.h for some good structs
-	WORD,
-	PIPE,
-	RIN,	// as in Redirection In
-	ROUT,
-	HDOC,
-	AROUT
-	// we need more, need to differenciate between < and < with words after.
-}				t_e_type;	// i know the _e_ isn't necessary but i don't care
 
 /*
 
@@ -64,11 +49,27 @@ typedef enum	e_type
 
 */
 
+// i'm guessing i'll need something like this...
+	// swap names with below?
+	// no idea what the values should be yet but whatever
+	// is it ok for me to do the typedef here?
+typedef enum	e_type
+{			// NO see vportens' struct.h for some good structs
+	WORD,
+	PIPE,	// might not be necessary?
+	RIN,	// as in Redirection In
+	ROUT,
+	HDOC,
+	AROUT
+	// we need more, need to differenciate between < and < with words after.
+}				t_e_type;	// i know the _e_ isn't necessary but i don't care
+
 typedef struct	s_tok
 {
 
 	t_e_type	type;
-	char		*str;
+	char		*str;	// should this be the exapanded string or OG
+						// like do i perform alterations to it and use it at the end?
 
 	// should it be a linked list?
 	struct s_tok	*next;
@@ -78,15 +79,16 @@ typedef struct	s_tok
 typedef struct	s_cmd_line
 {
 	// this value starts at 1...
-	int		num;		// or we use an ilist and a pointer to this struct?
-	t_tok	*tokens;
-	char	*line;	// as in the full line read with gnl
+	int					num;		// or we use an ilist and a pointer to this struct?
+	t_tok				*tokens;
+	char				*line;	// as in the full line read with gnl
 	// we could have a linked list of the broken up lines?
 	// we could also have a string that's the final product we are to send to execve?
 	
-	int		dqs;	// double quotes
-	int		sqs;
-	int		pipe;	//  do we want this?
+	int					dqs;	// double quotes
+	int					sqs;
+	int					pipe;	//  do we want this?	// is it the position?
+	struct s_sh			*home;
 	
 	struct s_cmd_line	*next;
 }				t_cmd_line;
@@ -128,7 +130,7 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 **	Main
 */
 
-
+int			create_cmd_line_elem(t_sh *all, char *line);
 int			minishell(t_sh *all, int i);
 
 /*
@@ -149,7 +151,7 @@ void		ft_simple_print();
 **	Lexer
 */
 
-int			lexer(t_sh *all);
+int			lexer(t_cmd_line *cmd);
 
 /*
 **	Parser
@@ -167,7 +169,7 @@ int			ft_tokdel_all(t_tok **lst);
 **	Command List
 */
 
-t_cmd_line	*ft_cmdline_new(char *line, int num);
+t_cmd_line	*ft_cmdline_new(t_sh *all, char *line, int num);
 int			ft_cmdline_add_front(t_cmd_line **lst, t_cmd_line *new);
 int			ft_cmdline_del_all(t_cmd_line **lst);
 
@@ -198,5 +200,12 @@ int			builtin_env(t_sh *all);
 */
 
 int			free_sh(t_sh *all);
+
+/*
+**	Split_Until
+*/
+
+char		**split_until(char const *s, char *set, int l);
+
 
 #endif

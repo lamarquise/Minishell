@@ -20,6 +20,7 @@ SRCS_SHELL	=	minishell.c \
 				builtin_env.c \
 				free.c \
 				printing.c \
+				split_until.c \
 
 
 # may move these to be in the SRCS folder, if the cors are gonna get all annoying about it...

@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:16:02 by me                #+#    #+#             */
-/*   Updated: 2022/01/19 05:07:39 by me               ###   ########.fr       */
+/*   Updated: 2022/01/20 07:08:14 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 int	ft_get_all_env(t_sh *all)
 {
 	int		i;
+	char	*str;
 	t_list	*tmp;
 
 	if (!all)
@@ -32,13 +33,18 @@ int	ft_get_all_env(t_sh *all)
 	// i dereference some shit?
 	while ((all->envir)[i])
 	{
-		tmp = ft_lstnew((all->envir)[i]);
+		str = ft_strdup((all->envir)[i]);
+		if (!str)
+			return (3);	// nothing to free i think
+		tmp = ft_lstnew(str);
 		if (!tmp)
 		{
 			// anything to free?
-			return (3);
+			ft_scott_free(&str, 4);	// could put in return
+			return (4);
 		}
 		ft_lstadd_front(&all->env, tmp);
+		// can't secure cuz returns void right?
 		++i;
 	}
 	return (0);
