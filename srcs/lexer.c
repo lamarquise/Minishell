@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 20:32:46 by me               ###   ########.fr       */
+/*   Updated: 2022/01/22 05:03:09 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	sort_out_quotes(t_cmd_line *cmd)
 */
 
 	// send just the line?
-int	lexer(t_cmd_line *cmd)
+int	lexer(t_input_line *input)
 {
 	int pos;
 	int next_pipe;	// these values are possitions relative to cur pos of pos value
@@ -111,22 +111,22 @@ int	lexer(t_cmd_line *cmd)
 	int	split_until;
 	char **tmp;
 
-	if (!cmd)
+	if (!input)
 		return (1);	// i think the correct error is 1
 
 	pos = 0;
-//	printf("in lexer, line: |%s|, next_pipe val: %d\n", cmd->line, next_pipe);
-	while (cmd->line[pos])
+//	printf("in lexer, line: |%s|, next_pipe val: %d\n", input->line, next_pipe);
+	while (input->line[pos])
 	{
 		// could i just do find_chars( | ' " )?
-		next_pipe = ft_findchar(&cmd->line[pos], '|');
-		next_quote = ft_find_chars(&cmd->line[pos], "\'\"");
+		next_pipe = ft_findchar(&input->line[pos], '|');
+		next_quote = ft_find_chars(&input->line[pos], "\'\"");
 /*		if (next_pipe > next_quote)
 			split_until = next_quote;
 		else
 			split_until = next_pipe;
 		// next_quote - 1?
-		tmp = split_until(&cmd->line[pos], " \t\n", split_until - 1);
+		tmp = split_until(&input->line[pos], " \t\n", split_until - 1);
 		if (!tmp)
 			return (1);	// ret 1?
 		// now we need a func that figures out what each tmp str is
@@ -135,7 +135,7 @@ int	lexer(t_cmd_line *cmd)
 		if (next_pipe > next_quote)
 		{
 			// next_quote - 1?
-			tmp = split_until(&cmd->line[pos], " \t\n", split_until - 1);
+			tmp = split_until(&input->line[pos], " \t\n", split_until - 1);
 			if (!tmp)
 				return (1);	// ret 1?
 			// now we need a func that figures out what each tmp str is

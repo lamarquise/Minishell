@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_list.c                                         :+:      :+:    :+:   */
+/*   input_line_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:27:25 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 20:32:54 by me               ###   ########.fr       */
+/*   Updated: 2022/01/21 21:34:16 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
     // to some degree this inits too
-t_cmd_line	*ft_cmdline_new(t_sh *all, char *line, int num)
+t_input_line	*input_line_new(t_sh *all, char *line, int num)
 {
-	t_cmd_line	*elem;
+	t_input_line	*elem;
 
-	elem = (t_cmd_line *)malloc(sizeof(t_cmd_line));
+	elem = (t_input_line *)malloc(sizeof(t_input_line));
 	if (!elem)
 		return (NULL);
 	elem->num = num;
@@ -30,7 +30,7 @@ t_cmd_line	*ft_cmdline_new(t_sh *all, char *line, int num)
 	return (elem);
 }
 
-int	ft_cmdline_add_front(t_cmd_line **lst, t_cmd_line *new)
+int	input_line_add_front(t_input_line **lst, t_input_line *new)
 {
 	if (!lst || !new)
 		return (1);
@@ -40,9 +40,9 @@ int	ft_cmdline_add_front(t_cmd_line **lst, t_cmd_line *new)
 }
 
     // this is gonna be much trickier
-int	ft_cmdline_del_all(t_cmd_line **lst)
+int	input_line_del_all(t_input_line **lst)
 {
-	t_cmd_line	*tmp;
+	t_input_line	*tmp;
 
 	if (!lst)
 		return (1);

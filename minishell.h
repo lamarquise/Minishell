@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 20:32:49 by me               ###   ########.fr       */
+/*   Updated: 2022/01/22 05:02:53 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_tok
 {
 
 	t_e_type	type;
+	// rather than making a copy of the string we could have a pointer and a len?
 	char		*str;	// should this be the exapanded string or OG
 						// like do i perform alterations to it and use it at the end?
 
@@ -79,17 +80,18 @@ typedef struct	s_tok
 typedef struct	s_cmd
 {
 	t_tok				*tokens;
-	char				*words;	// might change later
+	char				*words;	// might change namelater
+	// do i modify words or str in tokens list?
 
 	int					dqs;	// double quotes
 	int					sqs;
-	int					pipe;	//  do we want this?	// is it the position?
+	int					pipe[2];	//  do we want this?	// is it the position?
 	struct s_full_line	*home;
 
 	struct s_cmd		*next;
 }				t_cmd;
 
-typedef struct	s_full_line
+typedef struct	s_input_line
 {
 	// this value starts at 1...
 	int					num;		// or we use an ilist and a pointer to this struct?
@@ -100,8 +102,8 @@ typedef struct	s_full_line
 	struct s_cmd		*cmds;
 	struct s_sh			*all;
 	
-	struct s_full_line	*next;
-}				t_full_line;
+	struct s_input_line	*next;
+}				t_input_line;
 
 
 typedef struct	s_sh	// this is our main struct, we will call it all
@@ -119,7 +121,7 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 	int		n_hist;	// the number of commands entered so far, just a counter
 	t_list	*env;
 
-	t_cmd_line	*lines;	// would also serve for the history?
+	t_input_line	*inputs;	// would also serve for the history?
 
 	// would it be intersting to copy paste the entire struct, line and tokens
 		// when someone uses the historique to grab an old command?
@@ -140,7 +142,7 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 **	Main
 */
 
-int			create_cmd_line_elem(t_sh *all, char *line);
+int			create_input_line_elem(t_sh *all, char *line);
 int			minishell(t_sh *all, int i);
 
 /*
@@ -161,10 +163,10 @@ void		ft_simple_print();
 **	Lexer
 */
 
-int			lexer(t_cmd_line *cmd);
+int			lexer(t_input_line *input);
 
 /*
-**	Lexer
+**	Make Tokens
 */
 
 
@@ -182,12 +184,12 @@ int			ft_tokadd_front(t_tok **lst, t_tok *new);
 int			ft_tokdel_all(t_tok **lst);
 
 /*
-**	Command List
+**	Input Line List
 */
 
-t_cmd_line	*ft_cmdline_new(t_sh *all, char *line, int num);
-int			ft_cmdline_add_front(t_cmd_line **lst, t_cmd_line *new);
-int			ft_cmdline_del_all(t_cmd_line **lst);
+t_input_line	*input_line_new(t_sh *all, char *line, int num);
+int			input_line_add_front(t_input_line **lst, t_input_line *new);
+int			input_line_del_all(t_input_line **lst);
 
 /*
 **	Builtins Hub
