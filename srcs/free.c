@@ -25,7 +25,8 @@ int free_sh(t_sh *all)
 //	printf("in free_sh start\n");
 	ft_lstclear(&all->env, &ft_lstdel_str_elem);	// returns void.
 //	printf("in free_sh mid\n");
-	ft_cmdline_del_all(&all->lines);	// secure this?
+	input_line_del_all(&all->inputs);	// secure this?
+
 //	printf("in free_sh end\n");
 
     return (0);

@@ -19,11 +19,11 @@
 	// new
 	// add front
 	// add back?
-	// del first
-	// del all?
+	// del first ?
+	// del all
 
 
-t_tok	*ft_toknew(t_e_type type, char *str)
+t_tok	*toknew(t_e_type type, char *str)
 {
 	t_tok	*elem;
 
@@ -37,7 +37,7 @@ t_tok	*ft_toknew(t_e_type type, char *str)
 }
 
 // fine for now
-int	ft_tokadd_front(t_tok **lst, t_tok *new)
+int	tokadd_front(t_tok **lst, t_tok *new)
 {
 	if (!lst || !new)
 		return (1);
@@ -46,7 +46,7 @@ int	ft_tokadd_front(t_tok **lst, t_tok *new)
 	return (0);
 }
 
-int	ft_tokdel_all(t_tok **lst)
+int	tokdel_all(t_tok **lst)
 {
 	t_tok	*tmp;
 

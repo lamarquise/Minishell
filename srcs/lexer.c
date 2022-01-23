@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/22 05:03:09 by me               ###   ########.fr       */
+/*   Updated: 2022/01/23 06:07:35 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	lexer(t_input_line *input)
 	int pos;
 	int next_pipe;	// these values are possitions relative to cur pos of pos value
 	int	next_quote;
-	int	split_until;
+//	int	split_until;
 	char **tmp;
 
 	if (!input)
@@ -135,7 +135,7 @@ int	lexer(t_input_line *input)
 		if (next_pipe > next_quote)
 		{
 			// next_quote - 1?
-			tmp = split_until(&input->line[pos], " \t\n", split_until - 1);
+			tmp = split_until(&input->line[pos], " \t\n", next_quote - 1);
 			if (!tmp)
 				return (1);	// ret 1?
 			// now we need a func that figures out what each tmp str is

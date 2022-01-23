@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 06:49:25 by me                #+#    #+#             */
-/*   Updated: 2022/01/22 05:03:12 by me               ###   ########.fr       */
+/*   Updated: 2022/01/23 06:07:37 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // possibly a contender for being added to minilib
 
-char	**split_until(char const *s, char *set, int l)
+char	**split_until(char *s, char *set, int l)
 {
 	char *str;
 	char **ret;

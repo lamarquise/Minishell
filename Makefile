@@ -13,6 +13,7 @@ SRCS_SHELL	=	minishell.c \
 				lexer.c \
 				parser.c \
 				token_list.c \
+				cmd_list.c \
 				input_line_list.c \
 				builtins_hub.c \
 				builtin_cd.c \
@@ -21,7 +22,7 @@ SRCS_SHELL	=	minishell.c \
 				free.c \
 				printing.c \
 				split_until.c \
-				make_token.c \
+				make_tokens.c \
 
 
 

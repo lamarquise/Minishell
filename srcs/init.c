@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:16:02 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 20:32:02 by me               ###   ########.fr       */
+/*   Updated: 2022/01/23 06:16:57 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	init_sh(t_sh *all)
 		// like CD, HOME, shit like that?
 		// is that unnecessary?
 	}
-	all->lines = NULL;
+	all->inputs = NULL;
 
 	return (0);	// 0 is success, throughout entire program
 }

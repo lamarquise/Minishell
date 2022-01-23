@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_line_list.c                                  :+:      :+:    :+:   */
+/*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 21:27:25 by me                #+#    #+#             */
-/*   Updated: 2022/01/23 05:32:52 by me               ###   ########.fr       */
+/*   Created: 2022/01/23 05:33:20 by me                #+#    #+#             */
+/*   Updated: 2022/01/23 05:53:59 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
     // to some degree this inits too
-t_input_line	*input_line_new(t_sh *all, char *line, int num)
+t_cmd	*cmd_new(t_input_line *input, char *words)
 {
-	t_input_line	*elem;
+	t_cmd	*elem;
 
-	elem = (t_input_line *)malloc(sizeof(t_input_line));
+	elem = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!elem)
 		return (NULL);
-	elem->num = num;
-	elem->line = line;
-	elem->cmds = NULL;
-	elem->home_sh = all;
+	elem->tokens = NULL;
+	elem->words = words;
+	elem->sqs = 0;
+	elem->dqs = 0;
+	elem->pipe[0] = 0;	// no idea if these are the right defualt values
+	elem->pipe[1] = 1;	// i think one should be STDIN and other STDOUT
+	elem->home_inp = input;
 	elem->next = NULL;
 	return (elem);
 }
 
-int	input_line_add_front(t_input_line **lst, t_input_line *new)
+int	cmd_add_front(t_cmd **lst, t_cmd *new)
 {
 	if (!lst || !new)
 		return (1);
@@ -37,9 +40,9 @@ int	input_line_add_front(t_input_line **lst, t_input_line *new)
 	return (0);
 }
 
-int	input_line_del_all(t_input_line **lst)
+int	cmd_del_all(t_cmd **lst)
 {
-	t_input_line	*tmp;
+	t_cmd	*tmp;
 
 	if (!lst)
 		return (1);
@@ -47,9 +50,9 @@ int	input_line_del_all(t_input_line **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		ft_scott_free(&(*lst)->line, 0);
-        cmd_del_all(&(*lst)->cmds); // secure?
-		(*lst)->home_sh = NULL;	// prolly not necessary
+		ft_scott_free(&(*lst)->words, 0);
+        tokdel_all(&(*lst)->tokens); // secure?
+		(*lst)->home_inp = NULL;	// prolly not necessary
 		free(*lst);
 		*lst = tmp;
 	}

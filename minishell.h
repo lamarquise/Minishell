@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/22 05:02:53 by me               ###   ########.fr       */
+/*   Updated: 2022/01/23 06:01:21 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct	s_cmd
 	int					dqs;	// double quotes
 	int					sqs;
 	int					pipe[2];	//  do we want this?	// is it the position?
-	struct s_full_line	*home;
+	struct s_input_line	*home_inp;
 
 	struct s_cmd		*next;
 }				t_cmd;
@@ -100,7 +100,7 @@ typedef struct	s_input_line
 	// we could also have a string that's the final product we are to send to execve?
 	
 	struct s_cmd		*cmds;
-	struct s_sh			*all;
+	struct s_sh			*home_sh;
 	
 	struct s_input_line	*next;
 }				t_input_line;
@@ -115,9 +115,9 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 	char	**av;
 	char	**envir;	// this is what the main passes us, just in case we need it again?
 	// would it be helpful to keep
+
 	//int	status; // in here too?
 
-	
 	int		n_hist;	// the number of commands entered so far, just a counter
 	t_list	*env;
 
@@ -129,41 +129,34 @@ typedef struct	s_sh	// this is our main struct, we will call it all
 		// this would only work if you can't edit lines from the historique...
 		// which only works if BOTH you can't arrow key through a line
 		// and in the specific case of the historique you can't backspace.
-
-	// something about commands and how they pipe together?
-
-
-	// i'm assuming somewhere in here will be the historique?
-	// but i also think a lot of stuff will just be pointers so
-	// after each new line i can free it all and get back to a clean minishell struct
 }				t_sh;
 
 /*
 **	Main
 */
 
-int			create_input_line_elem(t_sh *all, char *line);
-int			minishell(t_sh *all, int i);
+int				create_input_line_elem(t_sh *all, char *line);
+int				minishell(t_sh *all, int i);
 
 /*
 **	Init
 */
 
-int			ft_get_all_env(t_sh *all);
-int			init_sh(t_sh *all);
+int				ft_get_all_env(t_sh *all);
+int				init_sh(t_sh *all);
 
 /*
 **	Printing
 */
 
-void		ft_prompt(void);
-void		ft_simple_print();
+void			ft_prompt(void);
+void			ft_simple_print();
 
 /*
 **	Lexer
 */
 
-int			lexer(t_input_line *input);
+int				lexer(t_input_line *input);
 
 /*
 **	Make Tokens
@@ -179,17 +172,25 @@ int			lexer(t_input_line *input);
 **	Token List
 */
 
-t_tok		*ft_toknew(t_e_type type, char *str);
-int			ft_tokadd_front(t_tok **lst, t_tok *new);
-int			ft_tokdel_all(t_tok **lst);
+t_tok			*toknew(t_e_type type, char *str);
+int				tokadd_front(t_tok **lst, t_tok *new);
+int				tokdel_all(t_tok **lst);
+
+/*
+**	Command List
+*/
+
+t_cmd			*cmd_new(t_input_line *input, char *words);
+int				cmd_add_front(t_cmd **lst, t_cmd *new);
+int				cmd_del_all(t_cmd **lst);
 
 /*
 **	Input Line List
 */
 
 t_input_line	*input_line_new(t_sh *all, char *line, int num);
-int			input_line_add_front(t_input_line **lst, t_input_line *new);
-int			input_line_del_all(t_input_line **lst);
+int				input_line_add_front(t_input_line **lst, t_input_line *new);
+int				input_line_del_all(t_input_line **lst);
 
 /*
 **	Builtins Hub
@@ -207,7 +208,7 @@ int			input_line_del_all(t_input_line **lst);
 **	Builtin ENV
 */
 
-int			builtin_env(t_sh *all);
+int				builtin_env(t_sh *all);
 
 /*
 **	Builtin
@@ -217,13 +218,19 @@ int			builtin_env(t_sh *all);
 **	Free
 */
 
-int			free_sh(t_sh *all);
+int				free_sh(t_sh *all);
 
 /*
 **	Split_Until
 */
 
-char		**split_until(char const *s, char *set, int l);
+char			**split_until(char *s, char *set, int l);
 
+/*
+**	Make Tokens (might be tmp)
+*/
+
+int				str_contains_only(char *str, char *set);
+int				add_token(t_cmd *cmd, char **words);
 
 #endif

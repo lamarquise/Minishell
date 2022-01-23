@@ -6,13 +6,16 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 18:57:19 by me                #+#    #+#             */
-/*   Updated: 2022/01/21 21:32:27 by me               ###   ########.fr       */
+/*   Updated: 2022/01/23 06:16:44 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // possibly change name of file, possibly put these in lexer.c
+
+
+// No idea if any of this works or does what it's supposed to...
 
 
 
@@ -30,7 +33,7 @@ int	str_contains_only(char *str, char *set)
 	i = 0;
 	while (str[i])
 	{
-		found = findchar(set, str[i]);
+		found = ft_findchar(set, str[i]);
 		if (found == -1)
 			return (0);
 		++i;
@@ -42,14 +45,15 @@ int	str_contains_only(char *str, char *set)
 // this will be sent a string and figure out what kind of token to create and
 	// create it
 // or should i send the return of the split direct?
-int	add_token(t_cmd_line *cmd, char **words)
+int	add_token(t_cmd *cmd, char **words)
 {
+	// ok all this shit needs to change prolly
 	int			i;
 	char		*word;
 	t_tok		*tmp;
 	t_e_type	type;
 
-	if (!cmd || !str)
+	if (!cmd || !words)
 		return (1);	// 1 i think
 	// not sure about this second part...
 	if (!*words)
@@ -80,14 +84,14 @@ int	add_token(t_cmd_line *cmd, char **words)
 	// or should the validity of the word be down the function we pass things to?
 
 
-		tmp = ft_toknew(type, words);
+		tmp = toknew(type, word);
 		if (!tmp)
-			return (ft_scott_free(&word, 1));	/ 1 i think
-		if (ft_tokadd_front(&cmd->tokens, tmp))
+			return (ft_scott_free(&word, 1));	// 1 i think
+		if (tokadd_front(&cmd->tokens, tmp))
 		{
 			free(tmp);
 			// will it work in this order?
-			return (ft_scott_free(&word, 1));	/ 1 i think
+			return (ft_scott_free(&word, 1));	// 1 i think
 			//return (1);
 		}
 		++i;
