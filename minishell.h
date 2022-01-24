@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/23 06:01:21 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 02:28:02 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@
 // some defines
 
 /*
-
-	word
-	pipe
-	<
-	>
-	>>
-	<<
-	
-
-
 	A-Z words?
 		_ is also a valid char for words!
 	' Quote
@@ -80,7 +70,7 @@ typedef struct	s_tok
 typedef struct	s_cmd
 {
 	t_tok				*tokens;
-	char				*words;	// might change namelater
+	char				**words;	// might change namelater
 	// do i modify words or str in tokens list?
 
 	int					dqs;	// double quotes
@@ -159,10 +149,26 @@ void			ft_simple_print();
 int				lexer(t_input_line *input);
 
 /*
+**	Handle Quotes
+*/
+
+int	count_strtab(char **tab);
+int	dup_longer_strtab(char **tab, int add);
+int	add_back_strtab(char **tab, char *str);
+char	**concat_strtabs(char **t1, char **t2);
+int	wordify_quotes(char *line, char **words);
+
+/*
 **	Make Tokens
 */
 
+/*
+**	Execution
+*/
 
+int execute_external(t_cmd *cmd);
+int execute_cmd(t_cmd *cmd);
+int	input_line_exec_loop(t_input_line *input);
 
 /*
 **	Parser
@@ -180,7 +186,7 @@ int				tokdel_all(t_tok **lst);
 **	Command List
 */
 
-t_cmd			*cmd_new(t_input_line *input, char *words);
+t_cmd			*cmd_new(t_input_line *input, char **words);
 int				cmd_add_front(t_cmd **lst, t_cmd *new);
 int				cmd_del_all(t_cmd **lst);
 
@@ -195,6 +201,8 @@ int				input_line_del_all(t_input_line **lst);
 /*
 **	Builtins Hub
 */
+
+int				builtin_triage(t_cmd *cmd);
 
 /*
 **	Builtin CD
@@ -213,6 +221,12 @@ int				builtin_env(t_sh *all);
 /*
 **	Builtin
 */
+
+/*
+**	Execute something needs a better name
+*/
+
+int				input_line_exec_loop(t_input_line *input);
 
 /*
 **	Free

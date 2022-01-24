@@ -12,6 +12,7 @@ SRCS_SHELL	=	minishell.c \
 				init.c \
 				lexer.c \
 				parser.c \
+				handle_quotes.c \
 				token_list.c \
 				cmd_list.c \
 				input_line_list.c \
@@ -19,6 +20,7 @@ SRCS_SHELL	=	minishell.c \
 				builtin_cd.c \
 				builtin_pwd.c \
 				builtin_env.c \
+				execution.c \
 				free.c \
 				printing.c \
 				split_until.c \

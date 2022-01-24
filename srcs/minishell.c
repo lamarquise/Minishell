@@ -6,24 +6,12 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/23 06:16:55 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 03:29:40 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-	// here we do processing, like Lexer and Parser, then hand off to right func
-		// either builtin or exec
-int	run_mini(t_sh *all, char **line)
-{
-
-	(void)all;
-	(void)line;
-
-	// first check builtins
-	// then run as a normal func
-	return (1);
-}
 
 // almost certainly put somewhere else...
 int	create_input_line_elem(t_sh *all, char *line)
@@ -40,7 +28,7 @@ int	create_input_line_elem(t_sh *all, char *line)
 	{
 		// prolly free something too?
 		// a bit over kill but for now 🤷
-		input_line_del_all(&input);
+		input_line_del_all(&all->inputs);
 		return (1);
 	}
 	return (0);
@@ -74,10 +62,23 @@ int	minishell(t_sh *all, int i)
 //		free(line_input);
 		return (ret);
 	}
+	// here we have to do the expasion
+
+
+
 //	printf("in minishell func after lexer\n");
 
 	// some sort of run or exec func that will execute everything
 		// either it runs a builtin or does exec
+	// could move this part but here for now
+
+	ret = input_line_exec_loop(all->inputs);
+	if (ret != 0)
+	{
+		// some sort of free
+		return (ret);
+	}
+
 
 
 	// ideally free everything in t_sh *all that only exists for this line of commands

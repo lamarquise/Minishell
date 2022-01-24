@@ -6,14 +6,14 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 05:33:20 by me                #+#    #+#             */
-/*   Updated: 2022/01/23 05:53:59 by me               ###   ########.fr       */
+/*   Updated: 2022/01/23 22:22:39 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
     // to some degree this inits too
-t_cmd	*cmd_new(t_input_line *input, char *words)
+t_cmd	*cmd_new(t_input_line *input, char **words)
 {
 	t_cmd	*elem;
 
@@ -50,7 +50,8 @@ int	cmd_del_all(t_cmd **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		ft_scott_free(&(*lst)->words, 0);
+		ft_free_strtab((*lst)->words);
+//		ft_scott_free(&(*lst)->words, 0);
         tokdel_all(&(*lst)->tokens); // secure?
 		(*lst)->home_inp = NULL;	// prolly not necessary
 		free(*lst);
