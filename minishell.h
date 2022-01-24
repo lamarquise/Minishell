@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 16:58:33 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/24 18:42:26 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,10 @@ int				lexer(t_input_line *input);
 */
 
 int	count_strtab(char **tab);
-int	dup_longer_strtab(char **tab, int add);
+
+char	**dup_longer_strtab(char **tab, int add);
+//int	dup_longer_strtab(char ***tab, int add);
+
 int	add_back_strtab(char **tab, char *str);
 char	**concat_strtabs(char **t1, char **t2);
 int	wordify_quotes(char *line, char **words);
@@ -191,6 +194,7 @@ int				tokdel_all(t_tok **lst);
 t_cmd			*cmd_new(t_input_line *input, char **words);
 int				cmd_add_front(t_cmd **lst, t_cmd *new);
 int				cmd_del_all(t_cmd **lst);
+int				print_all_cmd_strs(t_cmd *cmds);
 
 /*
 **	Input Line List

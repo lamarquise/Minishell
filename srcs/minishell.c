@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 16:58:39 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/24 18:42:24 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ int	minishell(t_sh *all, int i)
 //		free(line_input);
 		return (ret);
 	}
-	// here we have to do the expasion
+	
+	print_all_cmd_strs(all->inputs->cmds);
 
+
+	// here we have to do the expasion
 
 
 //	printf("in minishell func after lexer\n");

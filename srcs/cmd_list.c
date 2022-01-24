@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 05:33:20 by me                #+#    #+#             */
-/*   Updated: 2022/01/23 22:22:39 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 18:42:22 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,26 @@ int	cmd_del_all(t_cmd **lst)
 	}
 	return (0);
 }
+
+int	print_all_cmd_strs(t_cmd *cmds)
+{
+	int	i;
+	t_cmd *tmp;
+
+	if (!cmds)
+		return (1);
+	i = 1;
+	tmp = cmds;
+	while (tmp)
+	{
+		printf("Cmd no. %d\n----\n", i);
+		ft_print_strtab(tmp->words);
+		printf("----\n");
+		tmp = tmp->next;
+		++i;
+	}
+	return (0);
+}
+
+
+

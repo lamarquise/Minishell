@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 23:51:24 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 16:58:41 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/24 18:42:17 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "minishell.h"
 
+	// rename strtab_len?
 int	count_strtab(char **tab)
 {
 	int	i;
@@ -38,42 +39,9 @@ char	**alloc_empty_strtab_n(int size)
 	return (ret);
 }
 */
-
-	// this might be the ugliest solution, ideally change
-		// not necessary if use Tokens but for now i don't
-	// could add to minilib?
-	// do i want to keep the add?
-int	dup_longer_strtab(char **tab, int add)
-{
-	int	i;
-	int	len;
-	char **tmp;
-
-	if (!tab)
-		return (-1);	// -1? would 0 be better?
-	len = count_strtab(tab);
-//	tmp = alloc_empty_strtab_n(len + add + 1);
-	tmp = (char **)ft_memalloc(sizeof(char *) * (len + add + 1));
-	if (!tmp)
-		return (-1);
-	i = 0;
-	while (i < len)
-	{
-		tmp[i] = ft_strdup(tab[i]);
-		if (!tmp[i])
-		{
-			ft_free_strtab(tmp);	// could put in the return if fine with dif ret val
-			return (-1);
-		}
-		++i;
-	}
-	ft_free_strtab(tab);
-	tab = tmp;
-	return (len + 1);
-}
-
 	// unused for now...
 	// shit, this isn't actually what i wanted...
+/*
 int	add_back_strtab(char **tab, char *str)
 {
 	int	last;
@@ -86,6 +54,51 @@ int	add_back_strtab(char **tab, char *str)
 	tab[last] = str;	// so we don't do the substrhere? i think no
 	return (1);			// cuz you don't know I'll want to add.
 }
+*/
+
+
+	// this might be the ugliest solution, ideally change
+		// not necessary if use Tokens but for now i don't
+	// could add to minilib?
+	// do i want to keep the add?
+char	**dup_longer_strtab(char **tab, int add)
+{
+	int	i;
+	int	len;
+	char **ret;
+
+	printf("Start of Dup_strtab, strtab:\n--\n");
+	ft_print_strtab(tab);
+	printf("--\n");
+	if (!tab)
+		return (NULL);	// -1? would 0 be better?
+	len = count_strtab(tab);
+//	ret = alloc_empty_strtab_n(len + add + 1);
+	ret = (char **)ft_memalloc(sizeof(char *) * (len + add + 1));
+	if (!ret)
+	{
+		ft_free_strtab(tab);
+		return (NULL);
+	}
+	i = 0;
+	while (i < len)
+	{
+		ret[i] = ft_strdup(tab[i]);
+		if (!ret[i])
+		{
+			ft_free_strtab(tab);
+			ft_free_strtab(ret);	// could put in the return if fine with dif ret val
+			return (NULL);
+		}
+		++i;
+	}
+	ft_free_strtab(tab);
+//	tab = ret;
+	printf("End of Dup_strtab, strtab:\n--\n");
+	ft_print_strtab(ret);
+	printf("--\n");
+	return (ret);
+}
 
 // this is basically like my special strjoin i made for GNL
 
@@ -94,6 +107,7 @@ int	add_back_strtab(char **tab, char *str)
 		// no because i ret t1 or t2 direct sometimes...
 	// could i dup them instead and then free both outside either way?
 		// would be more annoying i think to use...
+	// call it join_strtab?
 char	**concat_strtabs(char **t1, char **t2)
 {
 	int		size;
@@ -167,15 +181,20 @@ int	wordify_quotes(char *line, char **words)
 	int		next_pipe;
 	int		next_quote;
 
-//	printf("start of Wordify Quotes\n");
+	printf("start of Wordify Quotes, strtab:\n--\n");
+	ft_print_strtab(words);
+	printf("--\n");
 	if (!line || !words)
 		return (1);
+	// it dones't matter if there 's a pipe in quotes!!!!!!!!!!!!!
 	next_pipe = ft_findchar(line, '|');
-	next_quote = ft_findchar(&line[1], line[0]) + 1;
-	if (next_quote ==  -1)
+//	next_quote = ft_findchar(&line[1], line[0]) + 1;
+	next_quote = ft_findchar(&line[1], line[0]) + 2;
+	if (next_quote == -1)
 		return (1);
-	if (next_pipe >= 0 && next_pipe < next_quote)
-		return (1);		// something else? // this means there's a loose quote somewhere
+	// get rid of this, there can be pipes
+//	if (next_pipe >= 0 && next_pipe < next_quote)
+//		return (1);		// something else? // this means there's a loose quote somewhere
 
 	// this way just seems more complicated, for no particular reason...
 /*
@@ -188,12 +207,21 @@ int	wordify_quotes(char *line, char **words)
 		return (ft_scott_free(&tmp, 1));
 */
 
-	last = dup_longer_strtab(words, 1);
+/*	last = dup_longer_strtab(words, 1);
 	if (last == -1)
 		return (1);
+*/
+	words = dup_longer_strtab(words, 1); //in theory if it fucks up i free the OG words in it so no leaks
+	if (!words)
+		return (1);
+	last = count_strtab(words) + 1;
+//	printf("Wordify after tab dup, strtab:\n--\n");
+//	ft_print_strtab(words);
+//	printf("--\n");
 	words[last] = ft_substr(line, 0, next_quote);
 	if (!words[last])	// i dont think i need to free.
 		return (1);
+	printf("*****\n new quotes line: |%s|\n******\n", words[last]);
 	printf("End of wordify, strtab:\n--\n");
 	ft_print_strtab(words);
 	printf("--\n");
