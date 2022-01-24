@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 02:28:02 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 16:58:33 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ typedef struct	s_cmd
 	char				**words;	// might change namelater
 	// do i modify words or str in tokens list?
 
+	// acutally useless
 	int					dqs;	// double quotes
 	int					sqs;
+	
 	int					pipe[2];	//  do we want this?	// is it the position?
 	struct s_input_line	*home_inp;
 

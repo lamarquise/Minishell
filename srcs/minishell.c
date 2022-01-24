@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 03:29:40 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 16:58:39 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	minishell(t_sh *all, int i)
 
 	ft_prompt();
 	ret = ft_gnl(&line, 0);
-	printf("Printing line |%s|\n", line);
+//	printf("Printing line |%s|\n", line);
 
 	ret = create_input_line_elem(all, line);
 	if (ret != 0)

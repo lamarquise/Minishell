@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 23:51:24 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 03:29:37 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 16:58:41 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,12 @@ int	wordify_quotes(char *line, char **words)
 	words[last] = ft_substr(line, 0, next_quote);
 	if (!words[last])	// i dont think i need to free.
 		return (1);
+	printf("End of wordify, strtab:\n--\n");
+	ft_print_strtab(words);
+	printf("--\n");
 
-//	printf("end of Wordify Quotes\n");
-	return (0);
+//	return (0);	// you idiot, not 0
+	return (next_quote + 1);
 }
 
 

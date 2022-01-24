@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:51:28 by me                #+#    #+#             */
-/*   Updated: 2022/01/23 23:46:51 by me               ###   ########.fr       */
+/*   Updated: 2022/01/24 16:58:37 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtin_triage(t_cmd *cmd)
 	}
 	else
 	{
-		printf("sorry builtin still under construction\n");
+//		printf("sorry builtin still under construction\n");
 		// i don't think i'll handle it this way in the end but...
 		return (-2);
 	}
