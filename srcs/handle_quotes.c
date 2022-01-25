@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 23:51:24 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 04:53:09 by me               ###   ########.fr       */
+/*   Updated: 2022/01/25 17:40:51 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,6 @@ int	strtab_len(char **tab)
 		++i;
 	return (i);
 }
-
-	// a good idea that i will maybe make later, but for now no need
-/*
-char	**strtab_dup(char **tab)
-{
-	char **ret;
-
-	if (!tab || !*tab)	// i think this will make it easier in this program
-		return (NULL);// don't want empty tables, like why bother
-	ret = (char **)ft_memalloc(sizeof(char *)
-
-
-}
-*/
-	// yea this is pretty pointless...
-/*
-char	**alloc_empty_strtab_n(int size)
-{
-	char **ret;
-
-	if (size < 1)
-		return (NULL);
-	ret = (char **)ft_memalloc(sizeof(char *) * (size + 1));
-	return (ret);
-}
-*/
-	// unused for now...
-	// shit, this isn't actually what i wanted...
-/*
-int	add_back_strtab(char **tab, char *str)
-{
-	int	last;
-
-	if (!tab || !str)
-		return (0);	// yea i think 0 would be clear
-	last = dup_longer_strtab(tab, 1);
-	if (last == -1)
-		return (0);
-	tab[last] = str;	// so we don't do the substrhere? i think no
-	return (1);			// cuz you don't know I'll want to add.
-}
-*/
 
 
 	// this might be the ugliest solution, ideally change
@@ -197,7 +155,6 @@ char	**concat_strtabs(char **t1, char **t2)
 char	**wordify_quotes(char *line, char **words)
 {
 	int		last;
-	int		next_pipe;
 	int		next_quote;
 	char	**ret;
 
@@ -211,33 +168,18 @@ char	**wordify_quotes(char *line, char **words)
 	}
 	ret = NULL;
 	// it dones't matter if there 's a pipe in quotes!!!!!!!!!!!!!
-	next_pipe = ft_findchar(line, '|');
 //	next_quote = ft_findchar(&line[1], line[0]) + 1;
-	next_quote = ft_findchar(&line[1], line[0]) + 2;
+	next_quote = ft_findchar(&line[1], line[0]);
+	printf("wordify, next_quote = %d\n", next_quote);
+
+	// this may not be the expected behavior, sujet unclear, maybe i need to pass the bad arg to cmds
+		// and they tell me they exist but args are bad.
 	if (next_quote == -1)
 	{
+//		printf("wordify, didn't find 2nd quote, next_quote = %d\n", next_quote);
 		ft_free_strtab(words);
 		return (NULL);
 	}
-	// get rid of this, there can be pipes
-//	if (next_pipe >= 0 && next_pipe < next_quote)
-//		return (1);		// something else? // this means there's a loose quote somewhere
-
-	// this way just seems more complicated, for no particular reason...
-/*
-	char	*tmp;
-
-	tmp = ft_substr(line, 0, next_quote);
-	if (!tmp)
-		return (1);
-	if (!add_back_strtab(words, tmp))
-		return (ft_scott_free(&tmp, 1));
-*/
-
-/*	last = dup_longer_strtab(words, 1);
-	if (last == -1)
-		return (1);
-*/
 	ret = dup_longer_strtab(words, 1); //in theory if it fucks up i free the OG words in it so no leaks
 	if (!ret)
 	{
@@ -250,7 +192,8 @@ char	**wordify_quotes(char *line, char **words)
 	printf("Wordify after tab dup, strtab ret:\n--\n");
 	ft_print_strtab(ret);
 	printf("--\n");
-	ret[last] = ft_substr(line, 0, next_quote);
+	// + 2 cuz if str "hi there" we start findchar at hi there" and want to get past last "
+	ret[last] = ft_substr(line, 0, next_quote + 2);
 	if (!ret[last])	// i dont think i need to free.
 	{
 		// this works because if substr fails

@@ -40,6 +40,25 @@ int	cmd_add_front(t_cmd **lst, t_cmd *new)
 	return (0);
 }
 
+int	cmd_add_back(t_cmd **lst, t_cmd *new)
+{
+	t_cmd *tmp;
+
+	if (!lst || !new)
+		return (1);
+	if (!*lst)
+	{
+		*lst = new;
+		return (0);
+	}
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	new->next = NULL;
+	return (0);
+}
+
 int	cmd_del_all(t_cmd **lst)
 {
 	t_cmd	*tmp;

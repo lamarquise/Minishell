@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 04:53:13 by me               ###   ########.fr       */
+/*   Updated: 2022/01/25 17:21:35 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ int				tokdel_all(t_tok **lst);
 
 t_cmd			*cmd_new(t_input_line *input, char **words);
 int				cmd_add_front(t_cmd **lst, t_cmd *new);
+int				cmd_add_back(t_cmd **lst, t_cmd *new);
 int				cmd_del_all(t_cmd **lst);
 int				print_all_cmd_strs(t_cmd *cmds);
 
