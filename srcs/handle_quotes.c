@@ -6,16 +6,20 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 23:51:24 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 18:42:17 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 04:53:09 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // possibly rename?
 
+
+
+// REWORK SO MANY OF THESE FUNCTIONS!!!!
+
+
 #include "minishell.h"
 
-	// rename strtab_len?
-int	count_strtab(char **tab)
+int	strtab_len(char **tab)
 {
 	int	i;
 
@@ -27,6 +31,19 @@ int	count_strtab(char **tab)
 	return (i);
 }
 
+	// a good idea that i will maybe make later, but for now no need
+/*
+char	**strtab_dup(char **tab)
+{
+	char **ret;
+
+	if (!tab || !*tab)	// i think this will make it easier in this program
+		return (NULL);// don't want empty tables, like why bother
+	ret = (char **)ft_memalloc(sizeof(char *)
+
+
+}
+*/
 	// yea this is pretty pointless...
 /*
 char	**alloc_empty_strtab_n(int size)
@@ -72,7 +89,7 @@ char	**dup_longer_strtab(char **tab, int add)
 	printf("--\n");
 	if (!tab)
 		return (NULL);	// -1? would 0 be better?
-	len = count_strtab(tab);
+	len = strtab_len(tab);
 //	ret = alloc_empty_strtab_n(len + add + 1);
 	ret = (char **)ft_memalloc(sizeof(char *) * (len + add + 1));
 	if (!ret)
@@ -129,7 +146,7 @@ char	**concat_strtabs(char **t1, char **t2)
 		return (t1);
 
 //	printf("concat_strtabs, after first conditions\n");
-	size = count_strtab(t1) + count_strtab(t2);
+	size = strtab_len(t1) + strtab_len(t2);
 	ret = (char **)ft_memalloc(sizeof(char *) * (size + 1));
 	if (!ret)
 		return (NULL);
@@ -173,25 +190,35 @@ char	**concat_strtabs(char **t1, char **t2)
 	return (ret);
 }
 
-	// so here we look for the next " or ' and grab all that and dup it into words
+// maybe rework the Perview of this function, like maybe some of this could be done
+	// in lexer?
+// so here we look for the next " or ' and grab all that and dup it into words
 		// but make sure not after a pipe
-int	wordify_quotes(char *line, char **words)
+char	**wordify_quotes(char *line, char **words)
 {
 	int		last;
 	int		next_pipe;
 	int		next_quote;
+	char	**ret;
 
 	printf("start of Wordify Quotes, strtab:\n--\n");
 	ft_print_strtab(words);
 	printf("--\n");
 	if (!line || !words)
-		return (1);
+	{
+		ft_free_strtab(words);
+		return (NULL);
+	}
+	ret = NULL;
 	// it dones't matter if there 's a pipe in quotes!!!!!!!!!!!!!
 	next_pipe = ft_findchar(line, '|');
 //	next_quote = ft_findchar(&line[1], line[0]) + 1;
 	next_quote = ft_findchar(&line[1], line[0]) + 2;
 	if (next_quote == -1)
-		return (1);
+	{
+		ft_free_strtab(words);
+		return (NULL);
+	}
 	// get rid of this, there can be pipes
 //	if (next_pipe >= 0 && next_pipe < next_quote)
 //		return (1);		// something else? // this means there's a loose quote somewhere
@@ -211,23 +238,35 @@ int	wordify_quotes(char *line, char **words)
 	if (last == -1)
 		return (1);
 */
-	words = dup_longer_strtab(words, 1); //in theory if it fucks up i free the OG words in it so no leaks
-	if (!words)
-		return (1);
-	last = count_strtab(words) + 1;
-//	printf("Wordify after tab dup, strtab:\n--\n");
-//	ft_print_strtab(words);
-//	printf("--\n");
-	words[last] = ft_substr(line, 0, next_quote);
-	if (!words[last])	// i dont think i need to free.
-		return (1);
-	printf("*****\n new quotes line: |%s|\n******\n", words[last]);
+	ret = dup_longer_strtab(words, 1); //in theory if it fucks up i free the OG words in it so no leaks
+	if (!ret)
+	{
+		// wait, if dup_strtab fails doesn't words get freed either way?
+			// yes, at this point, words is freed.
+//		ft_free_strtab(words);
+		return (NULL);
+	}
+	last = strtab_len(words) + 1;
+	printf("Wordify after tab dup, strtab ret:\n--\n");
+	ft_print_strtab(ret);
+	printf("--\n");
+	ret[last] = ft_substr(line, 0, next_quote);
+	if (!ret[last])	// i dont think i need to free.
+	{
+		// this works because if substr fails
+		// nothing new gets allocated to ret, so when i free_strtab(ret)
+			// it frees all the strings and the whole thing, no need to
+			// worry about \0\0 being at the end, the whole thing gets freed.
+		ft_free_strtab(ret);
+		return (NULL);
+	}
+	printf("*****\nnew quotes line: |%s|\n******\n", ret[last]);
 	printf("End of wordify, strtab:\n--\n");
-	ft_print_strtab(words);
+	ft_print_strtab(ret);
 	printf("--\n");
 
 //	return (0);	// you idiot, not 0
-	return (next_quote + 1);
+	return (ret);
 }
 
 

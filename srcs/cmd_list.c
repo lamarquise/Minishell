@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 05:33:20 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 18:42:22 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 04:53:16 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	print_all_cmd_strs(t_cmd *cmds)
 		tmp = tmp->next;
 		++i;
 	}
+	printf("No more Cmd's\n");
 	return (0);
 }
 

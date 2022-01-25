@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 18:42:19 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 04:53:07 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,47 @@ int	sort_out_quotes(t_cmd_line *cmd)
 
 */
 
-int	create_cmd_elem(t_input_line *input, char **words)
+// could make a fill_cmd_elem
+	// basically everything in the if condition forest bolow
+	// each if calls this func 1ce
+
+
+	// this one leaves **words empty
+int	simple_create_cmd_elem(t_input_line *input)
 {
 	int		ret;
 	t_cmd	*new;
 	
+	if (!input)
+		return (1);
+
+	new = cmd_new(input, NULL);
+	if (!new)
+		return (1);	// returns 1! Perfect!
+	ret = cmd_add_front(&input->cmds, new);
+	if (ret != 0)
+	{
+		// is this the right place to free cmds? i guess?
+		cmd_del_all(&input->cmds);
+		return (1);
+	}
+	return (0);
+}
+
+
+	// honestly i might not even use this
+	// if i'm creating cmd's before having words...
+int	create_cmd_elem(t_input_line *input, char **words)
+{
+	int		ret;
+//	char	**tmp;
+	t_cmd	*new;
+	
 	if (!input || !words)
 		return (1);
+
+//	tmp = strtab_dup(words);
+
 	new = cmd_new(input, words);
 	if (!new)
 		return (ft_free_strtab(words));	// returns 1! Perfect!
@@ -132,7 +166,7 @@ int	lexer(t_input_line *input)
 	int		pos;
 //	int next_pipe;	// these values are possitions relative to cur pos of pos value
 //	int	next_quote;
-	int		ret;
+	int		ret;	// unused?
 	int		next_split;
 	char 	**words;
 	char	**tmp;
@@ -144,8 +178,11 @@ int	lexer(t_input_line *input)
 
 	words = NULL;	// you need this shit, it fixes everything
 	tmp = NULL;
+	ret = 0;
 	pos = 0;
 //	printf("in lexer, line: |%s|, next_pipe val: %d\n", input->line, next_pipe);
+	if (simple_create_cmd_elem(input) == 1)
+		return (1);
 	while (input->line[pos])
 	{
 		next_split = ft_find_chars(&input->line[pos], "|\'\"");
@@ -153,16 +190,17 @@ int	lexer(t_input_line *input)
 		if (input->line[pos] == '\'' || input->line[pos] == '\"')
 		{
 //			printf("lexer, first char is \' or \", strtab before wordify:\n-----\n");
-			printf("lexer, strtab after wordify:\n---\n");
 			// some sort of handle quotes that rets pos of last quote
-			ret = wordify_quotes(&input->line[pos], words);
-			ft_print_strtab(words);
-			if (ret == -1)
+			input->cmds->words = wordify_quotes(&input->line[pos], input->cmds->words);
+			printf("lexer, strtab after wordify:\n---\n");
+			ft_print_strtab(input->cmds->words);
+			printf("---\n");
+			if (!input->cmds->words)
 				return (1);	// frees above?
-	//		words = concat_strtabs(words, tmp);
-	//		if (!words)
+	//		input->cmds->words = concat_strtabs(input->cmds->words, tmp);
+	//		if (!input->cmds->words)
 	//			return (1);	// there must be a better way of doing this...
-			next_split = ret;	// so add it to pos at the end.
+			next_split = ft_strlen(input->cmds->words[strtab_len(input->cmds->words) - 1]);	// so add it to pos at the end.
 		}
 		else if (next_split == -1)	// if this happens the loop should end.
 		{	// first we handle if there are no special chars
@@ -172,16 +210,20 @@ int	lexer(t_input_line *input)
 			if (!tmp)
 				return (1);
 //			printf("lexer, did the split\n");
-			words = concat_strtabs(words, tmp);
-			if (!words)
+			input->cmds->words = concat_strtabs(input->cmds->words, tmp);
+			if (!input->cmds->words)
 				return (1);	// there must be a better way of doing this...
 //			printf("lexer, concated strtabs\n");
-			ret = create_cmd_elem(input, words);
+/*
+			ret = create_cmd_elem(input, input->cmds->words);
 			if (ret != 0)
 			{
 				// no frees i think cuz already free in create_cmd_elem()
 				return (1);
 			}
+*/
+			// could make this next_split = ...
+				// then no need for if at end of loop
 			pos = ft_strlen(input->line);
 //			printf("lexer, end of no pipe or quotes\n");
 		}
@@ -193,17 +235,22 @@ int	lexer(t_input_line *input)
 			tmp = split_until(&input->line[pos], " \t\n", next_split - 1);
 			if (!tmp)
 				return (1);
-			words = concat_strtabs(words, tmp);
-			if (!words)
+			input->cmds->words = concat_strtabs(input->cmds->words, tmp);
+			if (!input->cmds->words)
 				return (1);	// there must be a better way of doing this...
 			// normal split until around spaces and shove in a new t_cmd
 			// do we process the cmd now?
-			ret = create_cmd_elem(input, words);
+			if (simple_create_cmd_elem(input) == 1)
+				return (1);
+			++next_split;
+/*
+			ret = create_cmd_elem(input, input->cmds->words);
 			if (ret != 0)
 			{
 				// no frees i think cuz already free in create_cmd_elem()
 				return (1);
 			}
+*/
 		}
 		else if (input->line[next_split] == '\"')
 		{	// then we have a "" section
@@ -214,17 +261,19 @@ int	lexer(t_input_line *input)
 			tmp = split_until(&input->line[pos], " \t\n", next_split - 1);
 			if (!tmp)
 				return (1);
-			words = concat_strtabs(words, tmp);
-			if (!words)
+			input->cmds->words = concat_strtabs(input->cmds->words, tmp);
+			if (!input->cmds->words)
 				return (1);	// there must be a better way of doing this...
 			// normal split until around spaces and shove in a new t_cmd
 			// do we process the cmd now?
-			ret = create_cmd_elem(input, words);
+
+/*			ret = create_cmd_elem(input, input->cmds->words);
 			if (ret != 0)
 			{
 				// no frees i think cuz already free in create_cmd_elem()
 				return (1);
 			}
+*/
 		}
 		else if (input->line[next_split] == '\'')
 		{	// then we have a '' section
@@ -233,56 +282,39 @@ int	lexer(t_input_line *input)
 			tmp = split_until(&input->line[pos], " \t\n", next_split - 1);
 			if (!tmp)
 				return (1);
-			words = concat_strtabs(words, tmp);
-			if (!words)
+			input->cmds->words = concat_strtabs(input->cmds->words, tmp);
+			if (!input->cmds->words)
 				return (1);	// there must be a better way of doing this...
 			// normal split until around spaces and shove in a new t_cmd
 			// do we process the cmd now?
-			ret = create_cmd_elem(input, words);
+/*
+			ret = create_cmd_elem(input, input->cmds->words);
 			if (ret != 0)
 			{
 				// no frees i think cuz already free in create_cmd_elem()
 				return (1);
 			}
+*/
 		}
+// THE BOTOM 2 conditions are identical, you can make them 1
 		// + 1?
 		if (next_split >= 0)
 			pos += next_split;
 	}
 
+/*
+	// from when i was creating cmds after i filled a **words tab
+	ret = create_cmd_elem(input, words);
+	if (ret != 0)
+	{
+		// no frees i think cuz already free in create_cmd_elem()
+		return (1);
+	}
+*/
+
 	printf("-----\nvery end of lexer, pos=%d\n----------\n", pos);
-//	ft_print_strtab(words);
+//	ft_print_strtab(input->cmds->words);
 	return (0);
 }
 
-
-// int?
-	// ok so our lexer should identify tokens of first (aka top) elem of
-		// t_cmd_line *lines in *all that it encounters
-/*
-// the old version
-int	lexer(t_sh *all)
-{
-	if (!all || !all->lines)
-		return (1);
-
-//	printf("in lexer, start\n");
-	// is this where we put line in the cmd_line struct?
-
-	if (sort_out_quotes(all->lines) != 0)
-	{
-		// free some shit?
-		return (2);
-	}
-	// ok so use a findchar to look for quotes
-	int n_sqs;
-
-	n_sqs = ft_times_appears(all->lines->line, '\'');
-	printf("in lexer, times \' apprears in line: %d\n", n_sqs);
-
-	return (0); // means all good
-	// return (2); if parsing error!
-	// return (-1); if need to exit out of minishell program
-}
-*/
 

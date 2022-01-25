@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/24 18:42:26 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 04:53:13 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,14 +154,15 @@ int				lexer(t_input_line *input);
 **	Handle Quotes
 */
 
-int	count_strtab(char **tab);
+int	strtab_len(char **tab);
 
 char	**dup_longer_strtab(char **tab, int add);
 //int	dup_longer_strtab(char ***tab, int add);
 
 int	add_back_strtab(char **tab, char *str);
 char	**concat_strtabs(char **t1, char **t2);
-int	wordify_quotes(char *line, char **words);
+//int	wordify_quotes(char *line, char **words);
+char	**wordify_quotes(char *line, char **words);
 
 /*
 **	Make Tokens
