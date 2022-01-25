@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 18:12:54 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 18:31:19 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	lexer(t_input_line *input)
 	if (!input)
 		return (1);	// i think the correct error is 1
 
-	printf("-----------\nstart of lexer\n");
+//	printf("-----------\nstart of lexer\n");
 
 	tmp = NULL;
 	ret = 0;
@@ -99,23 +99,23 @@ int	lexer(t_input_line *input)
 	while (input->line[pos])
 	{
 		next_split = ft_find_chars(&input->line[pos], "|\'\"");
-		printf("lexer, in big loop, pos=%d, next_split=%d\n", pos, next_split);
+//		printf("lexer, in big loop, pos=%d, next_split=%d\n", pos, next_split);
 		if (input->line[pos] == '\'' || input->line[pos] == '\"')
 		{
 			// addes the stuff in quotes to end of words strtab
 			cur_cmd->words = wordify_quotes(&input->line[pos], cur_cmd->words);
-			printf("lexer, strtab after wordify:\n---\n");
-			ft_print_strtab(cur_cmd->words);
-			printf("---\n");
+//			printf("lexer, strtab after wordify:\n---\n");
+//			ft_print_strtab(cur_cmd->words);
+//			printf("---\n");
 			if (!cur_cmd->words)
 				return (1);	// frees above?
 			next_split = ft_strlen(cur_cmd->words[strtab_len(cur_cmd->words) - 1]);	// so add it to pos at the end.
 		}
 		else if (next_split == -1)	// if this happens the loop should end.
 		{	// first we handle if there are no special chars
-			printf("lexer, no quotes or |, printing strtab:\n---\n");
+//			printf("lexer, no quotes or |, printing strtab:\n---\n");
 			tmp = ft_split(&input->line[pos], " \t\n");
-			ft_print_strtab(tmp);
+//			ft_print_strtab(tmp);
 			if (!tmp)
 				return (1);
 //			printf("lexer, did the split\n");
@@ -132,7 +132,7 @@ int	lexer(t_input_line *input)
 		else if (input->line[pos + next_split] == '|')
 		{ // here we have a there's only a pipe section
 
-			printf("lexer, there is a pipe\n");
+//			printf("lexer, there is a pipe\n");
 				// next_split - 1?
 			tmp = split_until(&input->line[pos], " \t\n", next_split - 1);
 			if (!tmp)
@@ -151,7 +151,7 @@ int	lexer(t_input_line *input)
 		{	// then we have a "" section
 			// THIS ABSOLUTELY DOES NOT WORK BUT NOT SURE WHAT TO DO
 			// TESTING THE REST FOR NOW...
-			printf("lexer, there is a \"\n");
+//			printf("lexer, there is a \"\n");
 				// next_split - 1?
 			tmp = split_until(&input->line[pos], " \t\n", next_split - 1);
 			if (!tmp)
@@ -168,7 +168,7 @@ int	lexer(t_input_line *input)
 			pos += next_split;
 	}
 
-	printf("-----\nvery end of lexer, pos=%d\n----------\n", pos);
+//	printf("-----\nvery end of lexer, pos=%d\n----------\n", pos);
 //	ft_print_strtab(cur_cmd->words);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 04:53:11 by me               ###   ########.fr       */
+/*   Updated: 2022/01/25 19:21:23 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,14 @@ int	minishell(t_sh *all, int i)
 	
 	print_all_cmd_strs(all->inputs->cmds);
 
+	ret = parser(all->inputs)
+	if (ret != 0)
+	{
+		// some sort of free?
+		return (ret);
+	}
 
-	// here we have to do the expasion
-
+	print_all_cmd_strs(all->inputs->cmds);
 
 //	printf("in minishell func after lexer\n");
 

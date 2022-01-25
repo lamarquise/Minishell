@@ -6,13 +6,14 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 05:33:20 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 04:53:16 by me               ###   ########.fr       */
+/*   Updated: 2022/01/25 18:41:29 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
     // to some degree this inits too
+	// could add t_tok *tokens to args and put in elem->tokens to make more generic, just send NULL...
 t_cmd	*cmd_new(t_input_line *input, char **words)
 {
 	t_cmd	*elem;
@@ -24,8 +25,10 @@ t_cmd	*cmd_new(t_input_line *input, char **words)
 	elem->words = words;
 	elem->sqs = 0;
 	elem->dqs = 0;
+	elem->redirects = 0;
 	elem->pipe[0] = 0;	// no idea if these are the right defualt values
 	elem->pipe[1] = 1;	// i think one should be STDIN and other STDOUT
+	elem->exit_status = 0;
 	elem->home_inp = input;
 	elem->next = NULL;
 	return (elem);
@@ -79,6 +82,7 @@ int	cmd_del_all(t_cmd **lst)
 	return (0);
 }
 
+// move to printing?
 int	print_all_cmd_strs(t_cmd *cmds)
 {
 	int	i;
@@ -90,7 +94,7 @@ int	print_all_cmd_strs(t_cmd *cmds)
 	tmp = cmds;
 	while (tmp)
 	{
-		printf("Cmd no. %d\n----\n", i);
+		printf("Cmd no. %d\n---- **words strtab:\n", i);
 		ft_print_strtab(tmp->words);
 		printf("----\n");
 		tmp = tmp->next;

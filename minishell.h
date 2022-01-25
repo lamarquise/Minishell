@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:24:55 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 17:21:35 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 19:21:22 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ typedef struct	s_cmd
 	int					dqs;	// double quotes
 	int					sqs;
 	
+	int					redirects;	// no idea what this shit will be... an int?
 	int					pipe[2];	//  do we want this?	// is it the position?
-	struct s_input_line	*home_inp;
 
+	int					exit_status;	// for $? exit status expansion
+
+	struct s_input_line	*home_inp;
 	struct s_cmd		*next;
 }				t_cmd;
 
@@ -156,16 +159,35 @@ int				lexer(t_input_line *input);
 
 int	strtab_len(char **tab);
 
-char	**dup_longer_strtab(char **tab, int add);
+char			**dup_longer_strtab(char **tab, int add);
 //int	dup_longer_strtab(char ***tab, int add);
 
-int	add_back_strtab(char **tab, char *str);
-char	**concat_strtabs(char **t1, char **t2);
+char			**concat_strtabs(char **t1, char **t2);
 //int	wordify_quotes(char *line, char **words);
-char	**wordify_quotes(char *line, char **words);
+char			**wordify_quotes(char *line, char **words);
 
 /*
 **	Make Tokens
+*/
+
+/*
+**	Parser
+*/
+
+int				parser(t_input_line *input);
+
+/*
+**	Expansions
+*/
+
+int				perform_expansions(t_cmd *cmd);
+
+/*
+**	Redirections
+*/
+
+/*
+**	Pipes
 */
 
 /*
@@ -254,5 +276,13 @@ char			**split_until(char *s, char *set, int l);
 
 int				str_contains_only(char *str, char *set);
 int				add_token(t_cmd *cmd, char **words);
+
+/*
+**	Unused
+*/
+
+int				add_back_strtab(char **tab, char *str);
+
+
 
 #endif

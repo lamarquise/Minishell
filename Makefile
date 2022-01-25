@@ -11,8 +11,12 @@ DIR_SHELL	=	./srcs/
 SRCS_SHELL	=	minishell.c \
 				init.c \
 				lexer.c \
-				parser.c \
 				handle_quotes.c \
+				parser.c \
+				expansions.c \
+				reduce_quotes.c \
+				redirections.c \
+				pipes.c \
 				token_list.c \
 				cmd_list.c \
 				input_line_list.c \
@@ -25,8 +29,9 @@ SRCS_SHELL	=	minishell.c \
 				printing.c \
 				split_until.c \
 				make_tokens.c \
+				unused.c \
 
-
+# the files at the end may not be that useful in the end
 
 # may move these to be in the SRCS folder, if the cors are gonna get all annoying about it...
 DIR_MINILIB	=	./minilib/
