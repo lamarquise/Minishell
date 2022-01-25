@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:50:26 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 18:04:12 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 18:12:54 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,6 @@ int	ft_find_chars(char *str, char *syms)
 }
 
 
-/*
-	New idea for our lexing loop
-	i figure out if there's a pipe with findchar
-	then i look for ' or "
-	then i split before ' or "
-	grab all in ' or " and put in a token
-	and look for ' or " again
-	Repeat token part
-
-*/
-
 // could make a fill_cmd_elem
 	// basically everything in the if condition forest bolow
 	// each if calls this func 1ce
@@ -79,34 +68,6 @@ int	simple_create_cmd_elem(t_input_line *input)
 }
 
 
-	// honestly i might not even use this
-	// if i'm creating cmd's before having words...
-int	create_cmd_elem(t_input_line *input, char **words)
-{
-	int		ret;
-//	char	**tmp;
-	t_cmd	*new;
-	
-	if (!input || !words)
-		return (1);
-
-//	tmp = strtab_dup(words);
-
-	new = cmd_new(input, words);
-	if (!new)
-		return (ft_free_strtab(words));	// returns 1! Perfect!
-	ret = cmd_add_front(&input->cmds, new);
-	if (ret != 0)
-	{
-		// is this the right place to free cmds? i guess?
-		cmd_del_all(&input->cmds);
-		return (ft_free_strtab(words));	// returns 1! Perfect!
-	}
-	// this is where you might call a create_tokens_list()
-		// func to go throught the words and sort them out...
-	// or maybe do that in the lexer func, idk
-	return (0);
-}
 
 // could call this Parser if call "Parser.c" post processing of words or something
 	// but at least it works

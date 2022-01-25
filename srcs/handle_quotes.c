@@ -6,15 +6,11 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 23:51:24 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 17:40:51 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/25 18:11:07 by erlazo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // possibly rename?
-
-
-
-// REWORK SO MANY OF THESE FUNCTIONS!!!!
 
 
 #include "minishell.h"
@@ -42,9 +38,9 @@ char	**dup_longer_strtab(char **tab, int add)
 	int	len;
 	char **ret;
 
-	printf("Start of Dup_strtab, strtab:\n--\n");
-	ft_print_strtab(tab);
-	printf("--\n");
+//	printf("Start of Dup_strtab, strtab:\n--\n");
+//	ft_print_strtab(tab);
+//	printf("--\n");
 	if (!tab)
 		return (NULL);	// -1? would 0 be better?
 	len = strtab_len(tab);
@@ -69,9 +65,9 @@ char	**dup_longer_strtab(char **tab, int add)
 	}
 	ft_free_strtab(tab);
 //	tab = ret;
-	printf("End of Dup_strtab, strtab:\n--\n");
-	ft_print_strtab(ret);
-	printf("--\n");
+//	printf("End of Dup_strtab, strtab:\n--\n");
+//	ft_print_strtab(ret);
+//	printf("--\n");
 	return (ret);
 }
 
@@ -158,9 +154,9 @@ char	**wordify_quotes(char *line, char **words)
 	int		next_quote;
 	char	**ret;
 
-	printf("start of Wordify Quotes, strtab:\n--\n");
-	ft_print_strtab(words);
-	printf("--\n");
+//	printf("start of Wordify Quotes, strtab:\n--\n");
+//	ft_print_strtab(words);
+//	printf("--\n");
 	if (!line || !words)
 	{
 		ft_free_strtab(words);
@@ -170,7 +166,7 @@ char	**wordify_quotes(char *line, char **words)
 	// it dones't matter if there 's a pipe in quotes!!!!!!!!!!!!!
 //	next_quote = ft_findchar(&line[1], line[0]) + 1;
 	next_quote = ft_findchar(&line[1], line[0]);
-	printf("wordify, next_quote = %d\n", next_quote);
+//	printf("wordify, next_quote = %d\n", next_quote);
 
 	// this may not be the expected behavior, sujet unclear, maybe i need to pass the bad arg to cmds
 		// and they tell me they exist but args are bad.
@@ -189,9 +185,9 @@ char	**wordify_quotes(char *line, char **words)
 		return (NULL);
 	}
 	last = strtab_len(words) + 1;
-	printf("Wordify after tab dup, strtab ret:\n--\n");
-	ft_print_strtab(ret);
-	printf("--\n");
+//	printf("Wordify after tab dup, strtab ret:\n--\n");
+//	ft_print_strtab(ret);
+//	printf("--\n");
 	// + 2 cuz if str "hi there" we start findchar at hi there" and want to get past last "
 	ret[last] = ft_substr(line, 0, next_quote + 2);
 	if (!ret[last])	// i dont think i need to free.
@@ -203,10 +199,10 @@ char	**wordify_quotes(char *line, char **words)
 		ft_free_strtab(ret);
 		return (NULL);
 	}
-	printf("*****\nnew quotes line: |%s|\n******\n", ret[last]);
-	printf("End of wordify, strtab:\n--\n");
-	ft_print_strtab(ret);
-	printf("--\n");
+//	printf("*****\nnew quotes line: |%s|\n******\n", ret[last]);
+//	printf("End of wordify, strtab:\n--\n");
+//	ft_print_strtab(ret);
+//	printf("--\n");
 
 //	return (0);	// you idiot, not 0
 	return (ret);

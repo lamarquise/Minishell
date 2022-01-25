@@ -45,6 +45,37 @@ int	ft_times_appears(char *str, char sym)
 	return (j);
 }
 
+	// honestly i might not even use this
+	// if i'm creating cmd's before having words...
+int	create_cmd_elem(t_input_line *input, char **words)
+{
+	int		ret;
+//	char	**tmp;
+	t_cmd	*new;
+	
+	if (!input || !words)
+		return (1);
+
+//	tmp = strtab_dup(words);
+
+	new = cmd_new(input, words);
+	if (!new)
+		return (ft_free_strtab(words));	// returns 1! Perfect!
+	ret = cmd_add_front(&input->cmds, new);
+	if (ret != 0)
+	{
+		// is this the right place to free cmds? i guess?
+		cmd_del_all(&input->cmds);
+		return (ft_free_strtab(words));	// returns 1! Perfect!
+	}
+	// this is where you might call a create_tokens_list()
+		// func to go throught the words and sort them out...
+	// or maybe do that in the lexer func, idk
+	return (0);
+}
+
+
+
 
 	// a good idea that i will maybe make later, but for now no need
 /*
