@@ -6,7 +6,7 @@
 /*   By: erlazo <erlazo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 18:20:50 by erlazo            #+#    #+#             */
-/*   Updated: 2022/01/25 19:21:15 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/26 02:09:09 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 
 	// yes **concat_strtabs should definitly be called join_strtabs
-char	*concat_strab(
+char	*concat_strab()
 
 // basically the same as wordify but with diff split params? and not for a strtab, just one str.
 char	*expandify_word(t_cmd *cmd, char *word)
