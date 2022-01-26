@@ -6,7 +6,7 @@
 /*   By: me <erlazo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:32:06 by me                #+#    #+#             */
-/*   Updated: 2022/01/25 19:21:23 by erlazo           ###   ########.fr       */
+/*   Updated: 2022/01/26 15:04:14 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,15 @@ int	minishell(t_sh *all, int i)
 	
 	print_all_cmd_strs(all->inputs->cmds);
 
-	ret = parser(all->inputs)
+/*	ret = parser(all->inputs);
 	if (ret != 0)
 	{
 		// some sort of free?
 		return (ret);
 	}
+*/
 
-	print_all_cmd_strs(all->inputs->cmds);
+//	print_all_cmd_strs(all->inputs->cmds);
 
 //	printf("in minishell func after lexer\n");
 
@@ -80,12 +81,14 @@ int	minishell(t_sh *all, int i)
 		// either it runs a builtin or does exec
 	// could move this part but here for now
 
+	printf("pre exec loop\n");
 	ret = input_line_exec_loop(all->inputs);
 	if (ret != 0)
 	{
 		// some sort of free
 		return (ret);
 	}
+	printf("post exec loop\n");
 
 
 

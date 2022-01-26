@@ -6,7 +6,7 @@
 /*   By: erlazo <erlazo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 18:20:50 by erlazo            #+#    #+#             */
-/*   Updated: 2022/01/26 02:09:09 by me               ###   ########.fr       */
+/*   Updated: 2022/01/26 15:02:18 by me               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 
 	// yes **concat_strtabs should definitly be called join_strtabs
-char	*concat_strab()
+//char	*concat_strab()
 
 // basically the same as wordify but with diff split params? and not for a strtab, just one str.
 char	*expandify_word(t_cmd *cmd, char *word)
@@ -26,7 +26,8 @@ char	*expandify_word(t_cmd *cmd, char *word)
 
 	if (!cmd || !word)
 		return (NULL);
-		
+	i = 0;
+	ret = NULL;	
 
 	return (ret);
 }
@@ -53,6 +54,8 @@ int	perform_expansions(t_cmd *cmd)
 		return (1);
 	if (!*cmd->words)	// as in **words is not NULL but *words is, it's an empty tab
 		return (0);		// or shoud i just be like nah we don't want that shit, delete it and the cmd?
+	tmp = NULL;
+	pos = 0;
 	i = 0;
 	while (cmd->words[i])
 	{
